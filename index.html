@@ -137,11 +137,9 @@
 </div>
 
 <script>
-// This page expects to be served from the SAME Flask app as the bot
-// (main4.py exposes GET /api/stats on the same origin). If you host this
-// file separately, change API_BASE to your bot's full URL, e.g.
-// const API_BASE = "https://your-bot-host.example.com";
-const API_BASE = "";
+// This page fetches live stats from your Katabump-hosted bot.
+// If you ever move hosts or get a domain, update this one line.
+const API_BASE = "http://51.75.118.151:20060";
 
 const modules = [
   {tag:"/antispam", name:"Anti-Spam", tick:"var(--ok)", desc:"Detects flooding and repeated messages, deletes them, and escalates through warnings, timeouts, kicks or bans."},
