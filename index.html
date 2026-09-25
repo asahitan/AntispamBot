@@ -80,7 +80,6 @@
 <header>
   <div class="nav">
     <div class="brand"><span class="dot" id="navdot"></span>AntiSpam</div>
-    <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1091852954069381200" target="_blank" rel="noopener">Add to server</a>
   </div>
 </header>
 
@@ -137,9 +136,12 @@
 </div>
 
 <script>
-// This page fetches live stats from your Katabump-hosted bot.
-// If you ever move hosts or get a domain, update this one line.
-const API_BASE = "http://51.75.118.151:20060";
+// This page fetches live stats through a Cloudflare Worker, which relays
+// the request to your Katabump-hosted bot over plain HTTP behind the
+// scenes. This avoids the browser blocking an HTTPS page from calling an
+// HTTP address directly ("mixed content"). Deploy stats-proxy-worker.js
+// to Cloudflare Workers (free), then paste its *.workers.dev URL below.
+const API_BASE = "https://REPLACE-WITH-YOUR-WORKER.workers.dev";
 
 const modules = [
   {tag:"/antispam", name:"Anti-Spam", tick:"var(--ok)", desc:"Detects flooding and repeated messages, deletes them, and escalates through warnings, timeouts, kicks or bans."},
@@ -195,7 +197,7 @@ async function loadStats(){
   const dot = document.getElementById("status-dot");
   const text = document.getElementById("status-text");
   try{
-    const res = await fetch(API_BASE + "/api/stats", {cache:"no-store"});
+    const res = await fetch(API_BASE, {cache:"no-store"});
     if(!res.ok) throw new Error("bad response");
     const d = await res.json();
     document.getElementById("s-guilds").textContent = fmt(d.guild_count);
