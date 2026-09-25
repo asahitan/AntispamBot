@@ -221,7 +221,7 @@ async function loadStats(){
     text.className = d.online ? "status-live" : "status-off";
     document.getElementById("navdot").style.background = d.online ? "var(--ok)" : "var(--block)";
   }catch(e){
-    text.textContent = "can't reach bot API (is main4.py running?)";
+    text.textContent = "can't reach bot API ( Bot is Offline )";
     text.className = "status-off";
     document.getElementById("navdot").style.background = "var(--muted)";
   }
