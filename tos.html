@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Terms of Service — AntiSpam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F1417; --panel:#161C20; --panel-2:#1B2226; --line:#2A343A;
+    --text:#E8EDEF; --muted:#8A969C;
+    --ok:#33D17A; --warn:#F5B942; --block:#FF5D5D;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  *{box-sizing:inherit;}
+  html,body{height:100%;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.7;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-0.01em;}
+  a{color:var(--ok);}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 32px;width:100%;}
+  header{border-bottom:1px solid var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;max-width:1280px;margin:0 auto;gap:16px;flex-wrap:wrap;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;text-decoration:none;color:var(--text);}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);}
+  .nav-links{display:flex;align-items:center;gap:20px;}
+  .nav-links a{font-size:13px;color:var(--muted);text-decoration:none;}
+  .nav-links a:hover{color:var(--text);}
+  .nav-links a.current{color:var(--text);}
+  @media (max-width:480px){.nav-links{gap:14px;}}
+
+  main{padding:56px 0 72px;}
+  .doc{max-width:680px;margin:0 auto;}
+  .doc .eyebrow{color:var(--muted);font-size:13px;margin-bottom:10px;}
+  .doc h1{font-size:32px;font-weight:700;}
+  @media (max-width:520px){.doc h1{font-size:26px;}}
+  .doc .meta{color:var(--muted);font-size:13px;margin-top:12px;}
+  .doc .intro{color:var(--muted);font-size:14.5px;margin-top:20px;}
+
+  .doc section{border:none;padding:0;margin-top:36px;}
+  .doc h2{font-size:17px;font-weight:600;padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:14px;}
+  .doc p{font-size:14.5px;color:var(--text);margin:0 0 10px;}
+  .doc ul{margin:0 0 10px;padding-left:20px;font-size:14.5px;}
+  .doc li{margin-bottom:6px;}
+  .doc li strong{color:var(--text);}
+
+  .contact-box{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px 20px;margin-top:14px;}
+  .contact-box p{margin:0 0 6px;}
+  .contact-box p:last-child{margin-bottom:0;}
+
+  .doc-foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;}
+
+  .foot{padding:28px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);}
+  @media (max-width:480px){
+    .wrap{padding:0 18px;}
+    .nav{padding:16px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="/"><span class="dot"></span>AntiSpam</a>
+    <div class="nav-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/tos.html" class="current">Terms of Service</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="doc">
+      <div class="eyebrow">legal</div>
+      <h1>Terms of Service</h1>
+      <div class="meta">Effective date: November 28, 2024</div>
+      <p class="intro">These are the terms that apply when you invite AntiSpam to your server or interact with it.</p>
+
+      <section>
+        <h2>1. Acceptance of terms</h2>
+        <p>By inviting and using AntiSpam, you agree to be bound by these Terms of Service. If you do not agree, please remove the Bot from your server.</p>
+      </section>
+
+      <section>
+        <h2>2. Description of service</h2>
+        <p>AntiSpam is designed to help maintain a clean, spam-free environment on Discord servers by detecting and managing spam content. Features include:</p>
+        <ul>
+          <li>Spam message detection and deletion</li>
+          <li>User warnings or temporary bans for spam activity</li>
+          <li>Monitoring server activity for spam-like behavior</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>3. Usage restrictions</h2>
+        <p>You agree to use the Bot in compliance with:</p>
+        <ul>
+          <li>Discord's Terms of Service and Community Guidelines</li>
+          <li>Local laws and regulations applicable to your location</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. Data collection and privacy</h2>
+        <p>The Bot may collect and process certain data to function effectively, including:</p>
+        <ul>
+          <li>User IDs and messages flagged as spam</li>
+          <li>Server IDs and settings configured for anti-spam behavior</li>
+        </ul>
+        <p>By using the Bot, you consent to the collection and handling of data as described in the <a href="/privacy.html">Privacy Policy</a>.</p>
+      </section>
+
+      <section>
+        <h2>5. Limitation of liability</h2>
+        <p>AntiSpam is provided "as is" without warranties of any kind. The Bot's developers are not responsible for:</p>
+        <ul>
+          <li>Errors or disruptions in the Bot's operation</li>
+          <li>Loss of data, messages, or server-related issues caused by the Bot</li>
+          <li>Actions taken by the Bot resulting from incorrect configuration or misuse</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>6. Changes to the terms</h2>
+        <p>The developers reserve the right to update these Terms of Service at any time. Continued use of the Bot after changes implies acceptance of the updated terms.</p>
+      </section>
+
+      <section>
+        <h2>7. Termination</h2>
+        <p>The developers may restrict or terminate the Bot's service on any server at their discretion, particularly in cases of misuse or violation of these Terms.</p>
+      </section>
+
+      <section>
+        <h2>8. Contact</h2>
+        <p>Questions, feedback, or support:</p>
+        <div class="contact-box">
+          <p>Email: <a href="mailto:asahikaga009@gmail.com">asahikaga009@gmail.com</a></p>
+          <p>Discord: <a href="https://discord.gg/wgDauHEPhc" target="_blank" rel="noopener">discord.gg/wgDauHEPhc</a></p>
+        </div>
+      </section>
+
+      <div class="doc-foot">© 2024 AntiSpam. All rights reserved.</div>
+    </div>
+  </div>
+</main>
+
+<div class="wrap foot">
+  <span>AntiSpam — server moderation bot</span>
+  <span><a href="/privacy.html" style="color:var(--muted);">Privacy Policy</a></span>
+</div>
+
+</body>
+</html>
