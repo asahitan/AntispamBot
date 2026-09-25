@@ -35,13 +35,13 @@
   .console{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
   .console-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line);color:var(--muted);font-size:12px;}
   .console-body{padding:20px 18px;font-size:13.5px;}
-  .console-body .ln{display:flex;gap:10px;padding:3px 0;}
+  .console-body .ln{display:flex;align-items:center;gap:10px;padding:3px 0;}
   .console-body .ln .no{color:var(--line);width:18px;flex:none;text-align:right;}
   .console-body .k{color:var(--muted);}
   .console-body .v{color:var(--text);}
   .console-body .v.miss{color:var(--block);}
   .console-body .v.ok{color:var(--ok);}
-  .cursor{display:inline-block;width:7px;height:14px;background:var(--warn);vertical-align:-2px;animation:blink 1.1s steps(1) infinite;}
+  .cursor{display:inline-block;width:7px;height:1em;background:var(--warn);align-self:center;animation:blink 1.1s steps(1) infinite;}
   @keyframes blink{50%{opacity:0;}}
   @media (prefers-reduced-motion:reduce){.cursor{animation:none;}}
 
@@ -104,7 +104,7 @@
         <div class="ln"><span class="no">2</span><span class="k">status</span>&nbsp;<span class="v miss">404 not_found</span></div>
         <div class="ln"><span class="no">3</span><span class="k">action</span>&nbsp;<span class="v">none — no matching route</span></div>
         <div class="ln"><span class="no">4</span><span class="k">suggestion</span>&nbsp;<span class="v ok">check the url, or go home</span></div>
-        <div class="ln"><span class="no">5</span><span class="k">$</span>&nbsp;<span class="cursor"></span></div>
+        <div class="ln"><span class="no">5</span><span class="k">$</span><span class="cursor"></span></div>
       </div>
     </div>
   </div>
