@@ -141,7 +141,7 @@
 // scenes. This avoids the browser blocking an HTTPS page from calling an
 // HTTP address directly ("mixed content"). Deploy stats-proxy-worker.js
 // to Cloudflare Workers (free), then paste its *.workers.dev URL below.
-const API_BASE = "http://51.75.118.151:20060/api/stats";
+const API_BASE = "https://antispam-relay.onrender.com";
 
 const modules = [
   {tag:"/antispam", name:"Anti-Spam", tick:"var(--ok)", desc:"Detects flooding and repeated messages, deletes them, and escalates through warnings, timeouts, kicks or bans."},
