@@ -128,6 +128,10 @@
           Commands
         </a>
         <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/announcements.html" role="menuitem">
+          <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a2 2 0 0 0 2 2h1l3 4V5L6 9H5a2 2 0 0 0-2 2Z"/><path d="M14 8a4 4 0 0 1 0 8"/><path d="M18 5a8 8 0 0 1 0 14"/></svg></span>
+          Announcements
+        </a>
         <a class="dropdown-item" href="/privacy.html" role="menuitem">
           <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg></span>
           Privacy Policy
@@ -203,6 +207,8 @@
 // calling an HTTP address directly ("mixed content").
 const API_BASE = "https://antispam-relay.onrender.com";
 
+// --- Modules grid ---
+try {
 const modules = [
   {tag:"/antispam", name:"Anti-Spam", tick:"var(--ok)", desc:"Detects flooding and repeated messages, deletes them, and escalates through warnings, timeouts, kicks or bans."},
   {tag:"/antibot", name:"Anti-Bot", tick:"var(--ok)", desc:"Watches for bot-account raids joining your server and reacts automatically."},
@@ -224,7 +230,10 @@ document.getElementById("modules-grid").innerHTML = modules.map(m => `
     <h3>${m.name}</h3>
     <p>${m.desc}</p>
   </div>`).join("");
+} catch(e) { console.error("Modules render failed:", e); }
 
+// --- Command reference table ---
+try {
 const commands = [
   ["/antispam enable", "Turn anti-spam protection on for this server"],
   ["/antispam disable-all", "Turn off every anti-spam system at once"],
@@ -246,7 +255,10 @@ const commands = [
 ];
 document.getElementById("cmd-body").innerHTML = commands.map(c =>
   `<tr><td><code>${c[0]}</code></td><td>${c[1]}</td></tr>`).join("");
+} catch(e) { console.error("Commands render failed:", e); }
 
+// --- Dropdown menu ---
+try {
 const menuBtn = document.getElementById("menuBtn");
 const dropdownMenu = document.getElementById("dropdownMenu");
 
@@ -269,7 +281,10 @@ document.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeDropdown(); });
 dropdownMenu.querySelectorAll(".dropdown-item").forEach(a => a.addEventListener("click", closeDropdown));
 window.addEventListener("scroll", closeDropdown, {passive:true});
+} catch(e) { console.error("Dropdown wiring failed:", e); }
 
+// --- Live stats ---
+try {
 function fmt(n){ return new Intl.NumberFormat().format(n); }
 function fmtUptime(s){
   const h = Math.floor(s/3600), m = Math.floor((s%3600)/60);
@@ -279,6 +294,7 @@ function fmtUptime(s){
 async function loadStats(){
   const dot = document.getElementById("status-dot");
   const text = document.getElementById("status-text");
+  if(!text) return;
   try{
     const res = await fetch(API_BASE, {cache:"no-store"});
     if(!res.ok) throw new Error("bad response");
@@ -299,6 +315,7 @@ async function loadStats(){
 }
 loadStats();
 setInterval(loadStats, 30000);
+} catch(e) { console.error("Stats setup failed:", e); }
 </script>
 </body>
 </html>
