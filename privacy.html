@@ -17,29 +17,47 @@
   html{scroll-padding-top:env(safe-area-inset-top,0px);}
   *{box-sizing:inherit;}
   html,body{height:100%;}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.7;min-height:100dvh;display:flex;flex-direction:column;}
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-0.01em;}
-  a{color:var(--ok);}
-  .wrap{max-width:1280px;margin:0 auto;padding:0 32px;width:100%;}
-  header{border-bottom:1px solid var(--line);flex-shrink:0;}
-  main{flex:1 0 auto;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.6;min-height:100dvh;display:flex;flex-direction:column;}
+  header{flex-shrink:0;}
+  section{flex:1 0 auto;}
   footer{flex-shrink:0;}
-  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;max-width:1280px;margin:0 auto;gap:16px;flex-wrap:wrap;}
-  .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;text-decoration:none;color:var(--text);}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{width:100%;max-width:900px;margin:0 auto;padding:0 clamp(16px,4vw,32px);}
+  header{border-bottom:1px solid var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:900px;margin:0 auto;padding:16px clamp(16px,4vw,32px);gap:16px;flex-wrap:wrap;box-sizing:border-box;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(15px,3.6vw,18px);text-decoration:none;color:var(--text);white-space:nowrap;}
   .brand-logo{width:24px;height:24px;flex-shrink:0;}
   .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);}
-  .nav-links{display:flex;align-items:center;gap:20px;}
-  .nav-links a{font-size:13px;color:var(--muted);text-decoration:none;}
-  .nav-links a:hover{color:var(--text);}
-  .nav-links a.current{color:var(--text);}
-  @media (max-width:480px){.nav-links{gap:14px;}}
+  .btn{display:inline-block;background:var(--ok);color:#08130D;font-weight:600;font-family:'Space Grotesk',sans-serif;text-decoration:none;padding:10px 18px;border-radius:4px;font-size:14px;border:none;cursor:pointer;}
+  .btn:hover{filter:brightness(1.08);}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text);}
+
+  section{padding:clamp(28px,6vw,48px) 0;}
+  .section-head{margin-bottom:28px;}
+  .section-head h1{font-size:clamp(22px,5vw,28px);}
+  .section-head p{color:var(--muted);font-size:13.5px;margin:8px 0 0;}
+  .section-head code{color:var(--ok);}
+
+  .ann-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+  .ann-item{display:flex;gap:12px;padding:clamp(12px,3vw,16px);background:var(--panel);min-width:0;}
+  .ann-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;background:var(--panel-2);object-fit:cover;}
+  .ann-meta{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px;}
+  .ann-author{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;}
+  .ann-time{color:var(--muted);font-size:11.5px;}
+  .ann-content{font-size:13.5px;color:var(--text);white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;min-width:0;}
+  .ann-empty{color:var(--muted);font-size:13.5px;padding:20px 16px;background:var(--panel);margin:0;border-radius:6px;border:1px solid var(--line);}
+
+  .load-more-wrap{display:flex;justify-content:center;margin-top:20px;}
+  #loadMoreBtn{display:none;}
+  .spinner-text{color:var(--muted);font-size:12.5px;}
 
   .menu-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer;flex-shrink:0;}
   .menu-btn:hover{background:var(--panel);}
   .menu-btn:focus-visible{outline:2px solid var(--ok);outline-offset:2px;}
 
   .dropdown-wrap{position:relative;}
-  .dropdown-menu{position:fixed;top:78px;right:16px;left:auto;width:230px;max-width:calc(100vw - 28px);background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.45);padding:6px;z-index:61;opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;transition:opacity .16s ease,transform .16s ease;}
+  .dropdown-menu{position:absolute;top:calc(100% + 10px);right:0;left:auto;width:230px;max-width:calc(100vw - 28px);background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.45);padding:6px;z-index:61;opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;transition:opacity .16s ease,transform .16s ease;}
   .dropdown-menu.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
   @media (prefers-reduced-motion:reduce){.dropdown-menu{transition:none;}}
 
@@ -47,40 +65,40 @@
   .dropdown-item:hover{background:var(--panel-2);}
   .dropdown-item .ic{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:var(--panel-2);color:var(--ok);flex-shrink:0;}
   .dropdown-item:hover .ic{background:var(--bg);}
-  .dropdown-item.current{background:var(--panel-2);}
   .dropdown-divider{height:1px;background:var(--line);margin:6px 4px;}
 
-  main{padding:56px 0 72px;}
-  .doc{max-width:680px;margin:0 auto;}
-  .doc .eyebrow{color:var(--muted);font-size:13px;margin-bottom:10px;}
-  .doc h1{font-size:32px;font-weight:700;}
-  @media (max-width:520px){.doc h1{font-size:26px;}}
-  .doc .meta{color:var(--muted);font-size:13px;margin-top:12px;}
-  .doc .intro{color:var(--muted);font-size:14.5px;margin-top:20px;}
-
-  .doc section{border:none;padding:0;margin-top:36px;}
-  .doc h2{font-size:17px;font-weight:600;padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:14px;}
-  .doc h3{font-size:14.5px;font-weight:600;color:var(--text);margin-top:18px;margin-bottom:6px;}
-  .doc p{font-size:14.5px;color:var(--text);margin:0 0 10px;}
-  .doc ul{margin:0 0 10px;padding-left:20px;font-size:14.5px;}
-  .doc li{margin-bottom:6px;}
-  .doc li strong{color:var(--text);}
-
-  .contact-box{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:18px 20px;margin-top:14px;}
-  .contact-box p{margin:0 0 6px;}
-  .contact-box p:last-child{margin-bottom:0;}
-
-
   footer{border-top:1px solid var(--line);}
-  .foot{padding:28px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);font-size:13px;text-align:center;}
+  .foot{padding:36px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);font-size:13px;text-align:center;}
   .foot-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;}
   .foot-links a{color:var(--muted);text-decoration:none;}
   .foot-links a:hover{color:var(--text);text-decoration:underline;}
   .foot-sep{color:var(--line);}
+
+  /* Tablets (portrait/landscape) */
+  @media (max-width:768px){
+    .ann-meta{gap:8px;}
+  }
+
+  /* Small phones */
   @media (max-width:480px){
     .wrap{padding:0 18px;}
-    .nav{padding:16px 18px;}
+    .nav{padding:14px 18px;gap:10px;}
+    .ann-avatar{width:30px;height:30px;}
   }
+
+  /* Large desktop / 27"+ monitors: a touch more breathing room, column itself
+     stays a comfortable reading width so lines of text don't stretch too wide */
+  @media (min-width:1440px){
+    .wrap,.nav{max-width:960px;}
+  }
+
+  .legal-content{color:var(--text);font-size:14px;}
+  .legal-content h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(17px,3.6vw,19px);margin:32px 0 10px;}
+  .legal-content h2:first-child{margin-top:0;}
+  .legal-content p{margin:0 0 14px;color:var(--text);}
+  .legal-content ul{margin:0 0 14px;padding-left:20px;}
+  .legal-content li{margin:0 0 6px;}
+  .legal-content a{color:var(--ok);}
 </style>
 </head>
 <body>
@@ -111,7 +129,7 @@
           Announcements
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item current" href="/privacy.html" role="menuitem">
+        <a class="dropdown-item" href="/privacy.html" role="menuitem">
           <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg></span>
           Privacy Policy
         </a>
@@ -124,103 +142,61 @@
   </div>
 </header>
 
-<main>
+<section>
   <div class="wrap">
-    <div class="doc">
-      <div class="eyebrow">legal</div>
+    <div class="section-head">
       <h1>Privacy Policy</h1>
-      <div class="meta">Effective date: November 28, 2024 · Last updated: November 28, 2024</div>
-      <p class="intro">This policy covers what AntiSpam collects when it's running in your server, why, and how to request access or deletion.</p>
+      <p>Last updated <code>September 27, 2026</code>.</p>
+    </div>
+    <div class="legal-content">
 
-      <section>
-        <h2>1. Introduction</h2>
-        <p>AntiSpam ("the Bot") is committed to protecting your privacy and the security of the data it processes. This policy outlines what data the Bot collects, how it's used, and your rights regarding that information. By using the Bot, you agree to the terms below.</p>
-      </section>
+      <p>This Privacy Policy explains what information AntiSpam ("we", "us", "our") collects through the AntiSpam Discord bot and the antispambot.top website (together, the "Service"), and how that information is used.</p>
 
-      <section>
-        <h2>2. Data we collect</h2>
-        <h3>2.1 User data</h3>
-        <ul>
-          <li><strong>User IDs</strong> — used to identify and manage user activity on Discord servers.</li>
-          <li><strong>Messages</strong> — messages flagged as spam or as violating server rules may be temporarily stored for analysis and action.</li>
-        </ul>
-        <h3>2.2 Server data</h3>
-        <ul>
-          <li><strong>Server IDs</strong> — used to store server-specific settings and preferences.</li>
-          <li><strong>Configuration settings</strong> — anti-spam rules and preferences set by server administrators.</li>
-        </ul>
-        <h3>2.3 Interaction data</h3>
-        <ul>
-          <li>Logs of interactions with the Bot, such as command usage, to improve performance and troubleshoot issues.</li>
-        </ul>
-      </section>
+      <h2>1. Information We Collect</h2>
+      <p>To provide moderation features, the bot may process:</p>
+      <ul>
+        <li>Discord user IDs, usernames, and server (guild) IDs;</li>
+        <li>Message metadata relevant to spam or abuse detection (such as timestamps and message frequency);</li>
+        <li>Server configuration settings chosen by a server's administrators;</li>
+        <li>Moderation action logs (such as warnings, mutes, kicks, or bans issued through the bot).</li>
+      </ul>
+      <p>We do not collect payment information, and the website does not require you to create an account or submit personal contact details to view public pages such as this one or the announcements feed.</p>
 
-      <section>
-        <h2>3. How we use collected data</h2>
-        <p>Collected data is used to:</p>
-        <ul>
-          <li>Detect and mitigate spam or abusive behavior on Discord servers.</li>
-          <li>Improve the functionality and performance of the Bot.</li>
-          <li>Provide troubleshooting and support to users and server administrators.</li>
-        </ul>
-        <p>The Bot does not use collected data for marketing or advertising purposes.</p>
-      </section>
+      <h2>2. How We Use Information</h2>
+      <p>Information is used only to operate and improve the Service, including:</p>
+      <ul>
+        <li>Detecting and acting on spam, raids, or abusive behavior;</li>
+        <li>Applying the moderation settings a server's administrators have configured;</li>
+        <li>Diagnosing technical issues and maintaining reliability of the Service.</li>
+      </ul>
+      <p>We do not sell personal information, and we do not use it for advertising.</p>
 
-      <section>
-        <h2>4. Data sharing</h2>
-        <p>The Bot does not sell, rent, or share your data with third parties. Data may only be shared:</p>
-        <ul>
-          <li>When required by law or legal proceedings.</li>
-          <li>With Discord, in compliance with their Terms of Service and Developer Policies.</li>
-        </ul>
-      </section>
+      <h2>3. Data Retention</h2>
+      <p>Moderation logs and configuration data are retained for as long as the bot remains in a server, or as needed to provide the Service. Data associated with a server is deleted or anonymized within a reasonable period after the bot is removed from that server.</p>
 
-      <section>
-        <h2>5. Data retention</h2>
-        <ul>
-          <li><strong>Temporary data</strong> — messages flagged as spam are stored temporarily and deleted within 30 days unless required for ongoing investigations.</li>
-          <li><strong>Server settings</strong> — stored for as long as the Bot is active on the server, or until removed by the server administrator.</li>
-        </ul>
-      </section>
+      <h2>4. Sharing of Information</h2>
+      <p>We do not share personal information with third parties except:</p>
+      <ul>
+        <li>With infrastructure providers that host or operate the Service on our behalf, under obligations to protect that data;</li>
+        <li>Where required to comply with applicable law, legal process, or a valid governmental request;</li>
+        <li>To protect the rights, safety, or property of our users, Discord communities, or the public.</li>
+      </ul>
 
-      <section>
-        <h2>6. Security</h2>
-        <p>We prioritize the security of your data by implementing appropriate technical and organizational measures. However, no system can guarantee complete security — you're responsible for the security of your own Discord account and server.</p>
-      </section>
+      <h2>5. Your Choices</h2>
+      <p>Server administrators can reconfigure or disable bot features, and can remove the bot from a server at any time, which stops further data collection for that server. To request deletion of data associated with your Discord user ID, contact us using the details below.</p>
 
-      <section>
-        <h2>7. Your rights</h2>
-        <p>As a user, you have the following rights regarding your data:</p>
-        <ul>
-          <li><strong>Access</strong> — request access to the data associated with your account or server.</li>
-          <li><strong>Deletion</strong> — request removal of your data from the Bot's systems.</li>
-          <li><strong>Correction</strong> — request updates to incorrect or outdated information.</li>
-        </ul>
-        <p>To exercise your rights, contact us using the details below.</p>
-      </section>
+      <h2>6. Children's Privacy</h2>
+      <p>The Service is intended for use in accordance with Discord's own age requirements. We do not knowingly collect information from children below the minimum age permitted by Discord's Terms of Service.</p>
 
-      <section>
-        <h2>8. Children's privacy</h2>
-        <p>The Bot is not intended for use by individuals under the age of 13. If you believe data has been collected from a child under 13 without consent, please contact us and we will delete the data promptly.</p>
-      </section>
+      <h2>7. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Material changes will be reflected by updating the "Last updated" date above.</p>
 
-      <section>
-        <h2>9. Changes to this policy</h2>
-        <p>We may update this Privacy Policy from time to time. Significant changes will be communicated via email or our Discord support server. Continued use of the Bot after updates implies acceptance of the revised policy.</p>
-      </section>
-
-      <section>
-        <h2>10. Contact</h2>
-        <p>Questions, concerns, or requests related to this Privacy Policy:</p>
-        <div class="contact-box">
-          <p>Email: <a href="mailto:asahikaga009@gmail.com">antispamdevs@gmail.com</a></p>
-          <p>Discord: <a href="https://discord.gg/wgDauHEPhc" target="_blank" rel="noopener">discord.gg/wgDauHEPhc</a></p>
-        </div>
-      </section>
+      <h2>8. Contact</h2>
+      <p>Questions about this Privacy Policy can be sent to <a href="mailto:antispamdevs@gmail.com">antispamdevs@gmail.com</a>.</p>
 
     </div>
   </div>
-</main>
+</section>
 
 <footer>
   <div class="wrap foot">
@@ -234,28 +210,34 @@
 </footer>
 
 <script>
-const menuBtn = document.getElementById("menuBtn");
-const dropdownMenu = document.getElementById("dropdownMenu");
+try {
+  // --- Dropdown menu ---
+try {
+  const menuBtn = document.getElementById("menuBtn");
+  const dropdownMenu = document.getElementById("dropdownMenu");
 
-function openDropdown(){
-  dropdownMenu.classList.add("open");
-  menuBtn.setAttribute("aria-expanded", "true");
-}
-function closeDropdown(){
-  dropdownMenu.classList.remove("open");
-  menuBtn.setAttribute("aria-expanded", "false");
-}
-function toggleDropdown(e){
-  e.stopPropagation();
-  dropdownMenu.classList.contains("open") ? closeDropdown() : openDropdown();
-}
-menuBtn.addEventListener("click", toggleDropdown);
-document.addEventListener("click", (e) => {
-  if(!dropdownMenu.contains(e.target) && e.target !== menuBtn) closeDropdown();
-});
-document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeDropdown(); });
-dropdownMenu.querySelectorAll(".dropdown-item").forEach(a => a.addEventListener("click", closeDropdown));
-window.addEventListener("scroll", closeDropdown, {passive:true});
+  function openDropdown(){
+    dropdownMenu.classList.add("open");
+    menuBtn.setAttribute("aria-expanded", "true");
+  }
+  function closeDropdown(){
+    dropdownMenu.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+  }
+  function toggleDropdown(e){
+    e.stopPropagation();
+    dropdownMenu.classList.contains("open") ? closeDropdown() : openDropdown();
+  }
+  menuBtn.addEventListener("click", toggleDropdown);
+  document.addEventListener("click", (e) => {
+    if(!dropdownMenu.contains(e.target) && e.target !== menuBtn) closeDropdown();
+  });
+  document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeDropdown(); });
+  dropdownMenu.querySelectorAll(".dropdown-item").forEach(a => a.addEventListener("click", closeDropdown));
+  window.addEventListener("scroll", closeDropdown, {passive:true});
+} catch(e) { console.error("Dropdown wiring failed:", e); }
+
+} catch(e) { console.error("Dropdown wiring failed:", e); }
 </script>
 </body>
 </html>
