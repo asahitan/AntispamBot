@@ -17,7 +17,10 @@
   html{scroll-padding-top:env(safe-area-inset-top,0px);}
   *{box-sizing:inherit;}
   html,body{height:100%;}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.6;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.6;min-height:100dvh;display:flex;flex-direction:column;}
+  header{flex-shrink:0;}
+  footer{flex-shrink:0;}
+  main{flex:1 0 auto;}
   h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-0.01em;}
   a{color:inherit;}
   .wrap{max-width:1280px;margin:0 auto;padding:0 32px;}
@@ -91,7 +94,12 @@
   .dropdown-item:hover .ic{background:var(--bg);}
   .dropdown-divider{height:1px;background:var(--line);margin:6px 4px;}
 
-  .foot{padding:36px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:13px;}
+  footer{border-top:1px solid var(--line);}
+  .foot{padding:36px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);font-size:13px;text-align:center;}
+  .foot-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;}
+  .foot-links a{color:var(--muted);text-decoration:none;}
+  .foot-links a:hover{color:var(--text);text-decoration:underline;}
+  .foot-sep{color:var(--line);}
   @media (prefers-reduced-motion:no-preference){
     .stat .n{transition:opacity .3s ease;}
   }
@@ -147,6 +155,7 @@
   </div>
 </header>
 
+<main>
 <div class="hero">
   <div class="wrap hero-grid">
     <div>
@@ -196,11 +205,18 @@
     </div>
   </div>
 </section>
+</main>
 
-<div class="wrap foot">
-  <span>AntiSpam — server moderation bot</span>
-  <span>Status data refreshes every 30s from the bot itself</span>
-</div>
+<footer>
+  <div class="wrap foot">
+    <span>&copy; Copyright AntiSpam</span>
+    <div class="foot-links">
+      <a href="/tos.html">Terms of use</a>
+      <span class="foot-sep">|</span>
+      <a href="/privacy.html">Privacy policy</a>
+    </div>
+  </div>
+</footer>
 
 <script>
 // This page fetches live stats through a small relay hosted on Render,
