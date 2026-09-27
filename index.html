@@ -74,15 +74,6 @@
   .cmdtable code{color:var(--ok);}
   .cmdtable tr:last-child td{border-bottom:none;}
 
-  .ann-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
-  .ann-item{display:flex;gap:12px;padding:16px;background:var(--panel);}
-  .ann-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;background:var(--panel-2);object-fit:cover;}
-  .ann-meta{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px;}
-  .ann-author{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;}
-  .ann-time{color:var(--muted);font-size:11.5px;}
-  .ann-content{font-size:13.5px;color:var(--text);white-space:pre-wrap;word-break:break-word;}
-  .ann-empty{color:var(--muted);font-size:13.5px;padding:20px 16px;background:var(--panel);margin:0;border-radius:6px;border:1px solid var(--line);}
-
   .menu-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer;flex-shrink:0;}
   .menu-btn:hover{background:var(--panel);}
   .menu-btn:focus-visible{outline:2px solid var(--ok);outline-offset:2px;}
@@ -136,10 +127,6 @@
           <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
           Commands
         </a>
-        <a class="dropdown-item" href="#announcements" role="menuitem">
-          <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a2 2 0 0 0 2 2h1l3 4V5L6 9H5a2 2 0 0 0-2 2Z"/><path d="M14 8a4 4 0 0 1 0 8"/><path d="M18 5a8 8 0 0 1 0 14"/></svg></span>
-          Announcements
-        </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="/privacy.html" role="menuitem">
           <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg></span>
@@ -178,18 +165,6 @@
     </div>
   </div>
 </div>
-
-<section id="announcements">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Announcements</h2>
-      <p>Posted straight from Discord with <code>s!announce</code>.</p>
-    </div>
-    <div class="ann-list" id="announcements-list">
-      <p class="ann-empty">Loading announcements…</p>
-    </div>
-  </div>
-</section>
 
 <section id="modules">
   <div class="wrap">
@@ -295,43 +270,6 @@ document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeDropdo
 dropdownMenu.querySelectorAll(".dropdown-item").forEach(a => a.addEventListener("click", closeDropdown));
 window.addEventListener("scroll", closeDropdown, {passive:true});
 
-function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
-function fmtAnnTime(iso){
-  try{
-    const d = new Date(iso.endsWith("Z") ? iso : iso + "Z");
-    return d.toLocaleString();
-  }catch(e){ return ""; }
-}
-async function loadAnnouncements(){
-  const list = document.getElementById("announcements-list");
-  try{
-    const res = await fetch(`${API_BASE}/api/announcements`, {cache:"no-store"});
-    if(!res.ok) throw new Error("bad response");
-    const items = await res.json();
-    if(!Array.isArray(items) || items.length === 0){
-      list.innerHTML = `<p class="ann-empty">No announcements yet.</p>`;
-      return;
-    }
-    list.innerHTML = items.map(a => `
-      <div class="ann-item">
-        <img class="ann-avatar" src="${escapeHtml(a.avatar || "")}" alt="" loading="lazy">
-        <div>
-          <div class="ann-meta">
-            <span class="ann-author">${escapeHtml(a.author || "Unknown")}</span>
-            <span class="ann-time">${fmtAnnTime(a.created_at || "")}</span>
-          </div>
-          <div class="ann-content">${escapeHtml(a.content || "")}</div>
-        </div>
-      </div>`).join("");
-  }catch(e){
-    list.innerHTML = `<p class="ann-empty">Can't reach the bot's announcement feed right now.</p>`;
-  }
-}
-loadAnnouncements();
-setInterval(loadAnnouncements, 30000);
-
 function fmt(n){ return new Intl.NumberFormat().format(n); }
 function fmtUptime(s){
   const h = Math.floor(s/3600), m = Math.floor((s%3600)/60);
@@ -352,4 +290,15 @@ async function loadStats(){
     document.getElementById("uptime").textContent = fmtUptime(d.uptime_seconds);
     text.textContent = d.online ? "connected to bot" : "bot offline";
     text.className = d.online ? "status-live" : "status-off";
-    document.getElementById("navdot").style.background = d.on
+    document.getElementById("navdot").style.background = d.online ? "var(--ok)" : "var(--block)";
+  }catch(e){
+    text.textContent = "can't reach bot API ( Bot is Offline )";
+    text.className = "status-off";
+    document.getElementById("navdot").style.background = "var(--muted)";
+  }
+}
+loadStats();
+setInterval(loadStats, 30000);
+</script>
+</body>
+</html>
