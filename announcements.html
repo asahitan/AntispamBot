@@ -24,7 +24,7 @@
   h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-0.01em;}
   a{color:inherit;}
   .wrap{width:100%;max-width:900px;margin:0 auto;padding:0 clamp(16px,4vw,32px);}
-  header{border-bottom:1px solid var(--line);}
+  header{border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:70;background:var(--bg);}
   .nav{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:900px;margin:0 auto;padding:16px clamp(16px,4vw,32px);gap:16px;flex-wrap:wrap;box-sizing:border-box;}
   .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(15px,3.6vw,18px);text-decoration:none;color:var(--text);white-space:nowrap;}
   .brand-logo{width:24px;height:24px;flex-shrink:0;}
@@ -119,15 +119,6 @@
         <a class="dropdown-item" href="/announcements.html" role="menuitem">
           <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a2 2 0 0 0 2 2h1l3 4V5L6 9H5a2 2 0 0 0-2 2Z"/><path d="M14 8a4 4 0 0 1 0 8"/><path d="M18 5a8 8 0 0 1 0 14"/></svg></span>
           Announcements
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="/privacy.html" role="menuitem">
-          <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg></span>
-          Privacy Policy
-        </a>
-        <a class="dropdown-item" href="/tos.html" role="menuitem">
-          <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h8l4 4v14H7z"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="15" y2="15"/></svg></span>
-          Terms of Service
         </a>
       </div>
     </div>
