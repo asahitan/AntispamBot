@@ -47,6 +47,21 @@
   #loadMoreBtn{display:none;}
   .spinner-text{color:var(--muted);font-size:12.5px;}
 
+  .menu-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer;flex-shrink:0;}
+  .menu-btn:hover{background:var(--panel);}
+  .menu-btn:focus-visible{outline:2px solid var(--ok);outline-offset:2px;}
+
+  .dropdown-wrap{position:relative;}
+  .dropdown-menu{position:fixed;top:78px;right:16px;left:auto;width:230px;max-width:calc(100vw - 28px);background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.45);padding:6px;z-index:61;opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;transition:opacity .16s ease,transform .16s ease;}
+  .dropdown-menu.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}
+  @media (prefers-reduced-motion:reduce){.dropdown-menu{transition:none;}}
+
+  .dropdown-item{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:10px;text-decoration:none;color:var(--text);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;}
+  .dropdown-item:hover{background:var(--panel-2);}
+  .dropdown-item .ic{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:var(--panel-2);color:var(--ok);flex-shrink:0;}
+  .dropdown-item:hover .ic{background:var(--bg);}
+  .dropdown-divider{height:1px;background:var(--line);margin:6px 4px;}
+
   .foot{padding:36px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);}
   @media (max-width:480px){
     .wrap{padding:0 18px;}
@@ -59,7 +74,39 @@
 <header>
   <div class="nav">
     <a class="brand" href="/"><span class="dot"></span>AntiSpam</a>
-    <a class="btn btn-ghost" href="/">&larr; Back to home</a>
+    <div class="dropdown-wrap">
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="dropdownMenu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
+      </button>
+
+      <div class="dropdown-menu" id="dropdownMenu" role="menu">
+        <a class="dropdown-item" href="/#top" role="menuitem">
+          <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+          Home
+        </a>
+        <a class="dropdown-item" href="/#modules" role="menuitem">
+          <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+          Modules
+        </a>
+        <a class="dropdown-item" href="/#commands" role="menuitem">
+          <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
+          Commands
+        </a>
+        <a class="dropdown-item" href="/announcements.html" role="menuitem">
+          <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a2 2 0 0 0 2 2h1l3 4V5L6 9H5a2 2 0 0 0-2 2Z"/><path d="M14 8a4 4 0 0 1 0 8"/><path d="M18 5a8 8 0 0 1 0 14"/></svg></span>
+          Announcements
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="/privacy.html" role="menuitem">
+          <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg></span>
+          Privacy Policy
+        </a>
+        <a class="dropdown-item" href="/tos.html" role="menuitem">
+          <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h8l4 4v14H7z"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="15" y2="15"/></svg></span>
+          Terms of Service
+        </a>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -67,7 +114,7 @@
   <div class="wrap">
     <div class="section-head">
       <h1>Announcements</h1>
-      <p>Posted straight from <code>Anispam Bot</code>.</p>
+      <p>Posted straight from <code>Antispam Bot</code>.</p>
     </div>
     <div class="ann-list" id="announcements-list">
       <p class="ann-empty">Loading announcements&hellip;</p>
@@ -81,7 +128,6 @@
 
 <div class="wrap foot">
   <span>AntiSpam &mdash; server moderation bot</span>
-  <a href="/">Back to home</a>
 </div>
 
 <script>
@@ -184,6 +230,32 @@ if (loadMoreBtn) {
 }
 
 loadAnnouncements(false);
+
+// --- Dropdown menu ---
+try {
+  const menuBtn = document.getElementById("menuBtn");
+  const dropdownMenu = document.getElementById("dropdownMenu");
+
+  function openDropdown(){
+    dropdownMenu.classList.add("open");
+    menuBtn.setAttribute("aria-expanded", "true");
+  }
+  function closeDropdown(){
+    dropdownMenu.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+  }
+  function toggleDropdown(e){
+    e.stopPropagation();
+    dropdownMenu.classList.contains("open") ? closeDropdown() : openDropdown();
+  }
+  menuBtn.addEventListener("click", toggleDropdown);
+  document.addEventListener("click", (e) => {
+    if(!dropdownMenu.contains(e.target) && e.target !== menuBtn) closeDropdown();
+  });
+  document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeDropdown(); });
+  dropdownMenu.querySelectorAll(".dropdown-item").forEach(a => a.addEventListener("click", closeDropdown));
+  window.addEventListener("scroll", closeDropdown, {passive:true});
+} catch(e) { console.error("Dropdown wiring failed:", e); }
 </script>
 </body>
 </html>
