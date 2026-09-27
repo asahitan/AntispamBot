@@ -17,11 +17,13 @@
   html{scroll-padding-top:env(safe-area-inset-top,0px);}
   *{box-sizing:inherit;}
   html,body{height:100%;}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.7;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.7;min-height:100dvh;display:flex;flex-direction:column;}
+  header{border-bottom:1px solid var(--line);flex-shrink:0;}
+  main{flex:1 0 auto;}
+  footer{flex-shrink:0;}
   h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-0.01em;}
   a{color:var(--ok);}
   .wrap{max-width:1280px;margin:0 auto;padding:0 32px;width:100%;}
-  header{border-bottom:1px solid var(--line);}
   .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;max-width:1280px;margin:0 auto;gap:16px;flex-wrap:wrap;}
   .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;text-decoration:none;color:var(--text);}
   .brand-logo{width:24px;height:24px;flex-shrink:0;}
@@ -67,9 +69,13 @@
   .contact-box p{margin:0 0 6px;}
   .contact-box p:last-child{margin-bottom:0;}
 
-  .doc-foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;}
 
-  .foot{padding:28px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);}
+  footer{border-top:1px solid var(--line);}
+  .foot{padding:28px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);font-size:13px;text-align:center;}
+  .foot-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;}
+  .foot-links a{color:var(--muted);text-decoration:none;}
+  .foot-links a:hover{color:var(--text);text-decoration:underline;}
+  .foot-sep{color:var(--line);}
   @media (max-width:480px){
     .wrap{padding:0 18px;}
     .nav{padding:16px 18px;}
@@ -188,15 +194,20 @@
         </div>
       </section>
 
-      <div class="doc-foot">© 2024 AntiSpam. All rights reserved.</div>
     </div>
   </div>
 </main>
 
-<div class="wrap foot">
-  <span>AntiSpam — server moderation bot</span>
-  <span><a href="/privacy.html" style="color:var(--muted);">Privacy Policy</a></span>
-</div>
+<footer>
+  <div class="wrap foot">
+    <span>&copy; Copyright AntiSpam</span>
+    <div class="foot-links">
+      <a href="/tos.html">Terms of use</a>
+      <span class="foot-sep">|</span>
+      <a href="/privacy.html">Privacy policy</a>
+    </div>
+  </div>
+</footer>
 
 <script>
 const menuBtn = document.getElementById("menuBtn");
