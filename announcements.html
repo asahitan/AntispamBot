@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Announcements — AntiSpam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F1417; --panel:#161C20; --panel-2:#1B2226; --line:#2A343A;
+    --text:#E8EDEF; --muted:#8A969C;
+    --ok:#33D17A; --warn:#F5B942; --block:#FF5D5D;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  *{box-sizing:inherit;}
+  html,body{height:100%;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.6;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 32px;}
+  header{border-bottom:1px solid var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px 32px;max-width:900px;margin:0 auto;gap:16px;flex-wrap:wrap;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;text-decoration:none;color:var(--text);}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);}
+  .btn{display:inline-block;background:var(--ok);color:#08130D;font-weight:600;font-family:'Space Grotesk',sans-serif;text-decoration:none;padding:10px 18px;border-radius:4px;font-size:14px;border:none;cursor:pointer;}
+  .btn:hover{filter:brightness(1.08);}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text);}
+
+  section{padding:48px 0;}
+  .section-head{margin-bottom:28px;}
+  .section-head h1{font-size:28px;}
+  .section-head p{color:var(--muted);font-size:13.5px;margin:8px 0 0;}
+  .section-head code{color:var(--ok);}
+
+  .ann-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
+  .ann-item{display:flex;gap:12px;padding:16px;background:var(--panel);}
+  .ann-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;background:var(--panel-2);object-fit:cover;}
+  .ann-meta{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:4px;}
+  .ann-author{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13.5px;}
+  .ann-time{color:var(--muted);font-size:11.5px;}
+  .ann-content{font-size:13.5px;color:var(--text);white-space:pre-wrap;word-break:break-word;}
+  .ann-empty{color:var(--muted);font-size:13.5px;padding:20px 16px;background:var(--panel);margin:0;border-radius:6px;border:1px solid var(--line);}
+
+  .load-more-wrap{display:flex;justify-content:center;margin-top:20px;}
+  #loadMoreBtn{display:none;}
+  .spinner-text{color:var(--muted);font-size:12.5px;}
+
+  .foot{padding:36px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);}
+  @media (max-width:480px){
+    .wrap{padding:0 18px;}
+    .nav{padding:16px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="/"><span class="dot"></span>AntiSpam</a>
+    <a class="btn btn-ghost" href="/">&larr; Back to home</a>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <h1>Announcements</h1>
+      <p>Posted straight from Discord with <code>s!announce</code>.</p>
+    </div>
+    <div class="ann-list" id="announcements-list">
+      <p class="ann-empty">Loading announcements&hellip;</p>
+    </div>
+    <div class="load-more-wrap">
+      <button class="btn btn-ghost" id="loadMoreBtn">Load more</button>
+      <span class="spinner-text" id="loadMoreStatus"></span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap foot">
+  <span>AntiSpam &mdash; server moderation bot</span>
+  <a href="/">Back to home</a>
+</div>
+
+<script>
+// Same relay used on the homepage - forwards to the bot over plain HTTP.
+const API_BASE = "https://antispam-relay.onrender.com";
+const PAGE_SIZE = 20;
+
+let oldestId = null;
+let loading = false;
+let reachedEnd = false;
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function fmtAnnTime(iso){
+  try{
+    const d = new Date(iso.endsWith("Z") ? iso : iso + "Z");
+    return d.toLocaleString();
+  }catch(e){ return ""; }
+}
+function renderAnnouncement(a){
+  return `
+    <div class="ann-item">
+      <img class="ann-avatar" src="${escapeHtml(a.avatar || "")}" alt="" loading="lazy">
+      <div>
+        <div class="ann-meta">
+          <span class="ann-author">${escapeHtml(a.author || "Unknown")}</span>
+          <span class="ann-time">${fmtAnnTime(a.created_at || "")}</span>
+        </div>
+        <div class="ann-content">${escapeHtml(a.content || "")}</div>
+      </div>
+    </div>`;
+}
+
+async function loadAnnouncements(isLoadMore){
+  if (loading || reachedEnd) return;
+  loading = true;
+
+  const list = document.getElementById("announcements-list");
+  const loadMoreBtn = document.getElementById("loadMoreBtn");
+  const status = document.getElementById("loadMoreStatus");
+  if (!list || !loadMoreBtn) { loading = false; return; }
+
+  loadMoreBtn.disabled = true;
+  if (status) status.textContent = "Loading\u2026";
+
+  try{
+    let url = `${API_BASE}/api/announcements?limit=${PAGE_SIZE}`;
+    if (isLoadMore && oldestId) url += `&before=${oldestId}`;
+
+    const res = await fetch(url, {cache:"no-store"});
+    if(!res.ok) throw new Error("bad response");
+    const items = await res.json();
+
+    if (!Array.isArray(items)) throw new Error("bad payload");
+
+    if (!isLoadMore && items.length === 0){
+      list.innerHTML = `<p class="ann-empty">No announcements yet.</p>`;
+      loadMoreBtn.style.display = "none";
+      if (status) status.textContent = "";
+      loading = false;
+      return;
+    }
+
+    const html = items.map(renderAnnouncement).join("");
+    if (isLoadMore) {
+      list.insertAdjacentHTML("beforeend", html);
+    } else {
+      list.innerHTML = html;
+    }
+
+    if (items.length > 0) {
+      oldestId = items[items.length - 1].id;
+    }
+
+    if (items.length < PAGE_SIZE) {
+      reachedEnd = true;
+      loadMoreBtn.style.display = "none";
+      if (status) status.textContent = items.length > 0 || isLoadMore ? "That's everything." : "";
+    } else {
+      loadMoreBtn.style.display = "inline-block";
+      if (status) status.textContent = "";
+    }
+  }catch(e){
+    if (!isLoadMore) {
+      list.innerHTML = `<p class="ann-empty">Can't reach the bot's announcement feed right now.</p>`;
+      loadMoreBtn.style.display = "none";
+    } else if (status) {
+      status.textContent = "Couldn't load more right now.";
+    }
+  } finally {
+    loading = false;
+    loadMoreBtn.disabled = false;
+  }
+}
+
+const loadMoreBtn = document.getElementById("loadMoreBtn");
+if (loadMoreBtn) {
+  loadMoreBtn.addEventListener("click", () => loadAnnouncements(true));
+}
+
+loadAnnouncements(false);
+</script>
+</body>
+</html>
