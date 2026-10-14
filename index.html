@@ -317,7 +317,7 @@ async function loadStats(){
     text.className = d.online ? "status-live" : "status-off";
     document.getElementById("navdot").style.background = d.online ? "var(--ok)" : "var(--block)";
   }catch(e){
-    text.textContent = "can't reach bot API ( Bot is Offline )";
+    text.textContent = "Can't reach bot API ( Bot is Offline or Website is ongoing Maintenance )";
     text.className = "status-off";
     document.getElementById("navdot").style.background = "var(--muted)";
   }
