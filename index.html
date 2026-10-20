@@ -40,7 +40,6 @@
   .hero{padding:72px 0 48px;border-bottom:1px solid var(--line);}
   .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:start;}
   @media (max-width:820px){.hero-grid{grid-template-columns:1fr;}}
-  .eyebrow{color:var(--muted);font-size:13px;margin-bottom:14px;}
   h1.headline{font-size:44px;line-height:1.12;font-weight:700;}
   @media (max-width:520px){h1.headline{font-size:32px;}}
   .sub{color:var(--muted);font-size:15.5px;margin-top:18px;max-width:46ch;}
@@ -49,7 +48,6 @@
   .console{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden;}
   .console-bar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line);color:var(--muted);font-size:12px;}
   .console-body{padding:18px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-  .stat{}
   .stat .n{font-size:26px;font-weight:600;font-family:'Space Grotesk',sans-serif;}
   .stat .l{color:var(--muted);font-size:12px;margin-top:2px;}
   .stat.ok .n{color:var(--ok);}
@@ -67,11 +65,13 @@
   .modules{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
   @media (max-width:760px){.modules{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:520px){.modules{grid-template-columns:1fr;}}
-  .module{background:var(--panel);padding:20px;border-top:2px solid var(--tick,var(--ok));}
-  .module .tag{color:var(--muted);font-size:11px;}
+  .module{background:var(--panel);padding:20px;}
+  .module .tag{color:var(--ok);font-size:12px;word-break:break-word;}
   .module h3{font-size:15.5px;margin:8px 0 8px;}
   .module p{color:var(--muted);font-size:13px;margin:0;}
 
+  .note{color:var(--muted);font-size:13.5px;margin:0 0 20px;max-width:72ch;}
+  .note code{color:var(--ok);}
   .cmdtable-scroll{overflow-x:auto;}
   .cmdtable{width:100%;min-width:480px;border-collapse:collapse;font-size:13.5px;}
   .cmdtable th{text-align:left;color:var(--muted);font-weight:500;font-size:12px;padding:8px 12px;border-bottom:1px solid var(--line);}
@@ -155,9 +155,8 @@
 <div class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Discord moderation bot</div>
       <h1 class="headline">Spam gets deleted before your members see it.</h1>
-      <p class="sub">Anti-spam, anti-bot raids, link filtering, word filtering, captcha verification, sticky messages, anti-bot raid, anti-hacked account and anti-nuke, running quietly in the background of your server.</p>
+      <p class="sub">AntiSpam deletes spam, stops raids and bot joins, filters words and links, verifies new members with a captcha, and protects your server from nukes and hacked accounts. Set it all up from one command: <code style="color:var(--ok)">/configure</code>.</p>
       <div class="hero-actions">
         <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1091852954069381200" target="_blank" rel="noopener">Add to server</a>
         <a class="btn btn-ghost" href="https://top.gg/bot/1091852954069381200/vote" target="_blank" rel="noopener">Vote on top.gg</a>
@@ -181,7 +180,7 @@
   <div class="wrap">
     <div class="section-head">
       <h2>Modules</h2>
-      <p>Every protection system runs independently turn on only what your server needs.</p>
+      <p>Each feature works on its own. Turn on only what your server needs.</p>
     </div>
     <div class="modules" id="modules-grid"></div>
   </div>
@@ -191,8 +190,9 @@
   <div class="wrap">
     <div class="section-head">
       <h2>Command reference</h2>
-      <p>Slash commands, grouped by module.</p>
+      <p>Most settings live in /configure. These are the other commands.</p>
     </div>
+    <p class="note"><code>/configure</code> opens a dashboard that only you can see (Administrator only). Pick a feature from the menu and change its settings with buttons and menus. Features marked “owner only” are shown to the server owner.</p>
     <div class="cmdtable-scroll">
       <table class="cmdtable">
         <thead><tr><th>Command</th><th>Does</th></tr></thead>
@@ -215,31 +215,35 @@
 </footer>
 
 <script>
-// This page fetches live stats through a small relay hosted on Render,
-// which forwards the request to your Katabump-hosted bot over plain HTTP
-// behind the scenes. This avoids the browser blocking an HTTPS page from
-// calling an HTTP address directly ("mixed content").
+// Live stats come through a small relay on Render, so this HTTPS page
+// never calls the bot's plain-HTTP address directly (mixed content).
 const API_BASE = "https://antispam-relay.onrender.com";
 
 // --- Modules grid ---
 try {
 const modules = [
-  {tag:"/antispam", name:"Anti-Spam", tick:"var(--ok)", desc:"Detects flooding and repeated messages, deletes them, and escalates through warnings, timeouts, kicks or bans."},
-  {tag:"/antibot", name:"Anti-Bot", tick:"var(--ok)", desc:"Watches for bot-account raids joining your server and reacts automatically."},
-  {tag:"/duplicatefilter", name:"Duplicate Filter", tick:"var(--ok)", desc:"Catches the same message posted repeatedly across channels."},
-  {tag:"/filter", name:"Filtered Words", tick:"var(--warn)", desc:"Blocks a server-defined word list, with per-role and per-user whitelists."},
-  {tag:"/link", name:"Link Notifier", tick:"var(--warn)", desc:"Flags posted links and can whitelist trusted domains or roles."},
-  {tag:"captcha", name:"Captcha Verification", tick:"var(--ok)", desc:"Requires new members to verify before they can talk, cutting down bot joins."},
-  {tag:"/sticky", name:"Sticky Messages", tick:"var(--muted)", desc:"Keeps a chosen message pinned to the bottom of a channel automatically."},
-  {tag:"/autorespond", name:"Auto Respond", tick:"var(--muted)", desc:"Replies automatically to trigger phrases you configure."},
-  {tag:"/temp-channel", name:"Temporary Channels", tick:"var(--muted)", desc:"Creates voice or text channels on demand that clean themselves up."},
-  {tag:"/purge", name:"Purge", tick:"var(--muted)", desc:"Bulk-deletes messages from a channel in one command."},
-  {tag:"warn / timeout", name:"Moderation", tick:"var(--block)", desc:"Warn, timeout, kick or ban members, with a warning count that escalates automatically."},
-  {tag:"/whitelistrole", name:"Whitelisting", tick:"var(--muted)", desc:"Exempts trusted roles from anti-spam and filter checks."},
+  {tag:"/configure → Anti-Spam", name:"Anti-Spam", desc:"Detects flooding and repeated messages, deletes them, and escalates through warnings, timeouts, kicks or bans. Includes a whitelist and a log channel."},
+  {tag:"/configure → Anti-Bot", name:"Anti-Bot", desc:"Watches for bot accounts joining in waves and reacts automatically. Has its own log channel."},
+  {tag:"/configure → Duplicate Filter", name:"Duplicate Filter", desc:"Catches the same message posted repeatedly across channels. Trusted members can be whitelisted."},
+  {tag:"/configure → Filter Words", name:"Filter Words", desc:"Blocks the words and phrases you choose. Users and roles can be whitelisted, and blocked messages can be logged."},
+  {tag:"/configure → Link Notifier", name:"Link Notifier", desc:"Logs every link a member posts in a channel you pick, and can delete the message automatically. Whitelisted members’ links are logged but never deleted."},
+  {tag:"/configure → CAPTCHA Verification", name:"CAPTCHA Verification", desc:"Requires new members to verify before they can talk, cutting down bot joins."},
+  {tag:"/configure → Honeypot", name:"Honeypot", desc:"A trap channel real members never use. Hacked accounts and spam bots that post in it are sanctioned automatically."},
+  {tag:"/configure → Guard (owner only)", name:"Guard", desc:"Anti-nuke protection. Reacts to mass channel or role deletion, mass bans, unauthorized bots and waves of new accounts, and rebuilds what was deleted."},
+  {tag:"/configure → Raid Shield (owner only)", name:"Raid Shield", desc:"Stops several bots posting the same message at once, including spam hidden inside forwarded messages."},
+  {tag:"/configure → Appeals", name:"Appeals", desc:"Members can appeal a ban or timeout with a button in their DMs. Staff accept or deny it in a private channel."},
+  {tag:"/configure → Warn Decay", name:"Warn Decay", desc:"Warnings expire after the number of days you set, so old mistakes stop counting."},
+  {tag:"/configure → Join Logs", name:"Join Logs", desc:"Posts a message in a staff channel every time someone joins, with account details and Kick and Ban buttons."},
+  {tag:"/configure → Auto-Respond", name:"Auto Respond", desc:"Replies automatically to the trigger words or phrases you add."},
+  {tag:"/configure → Sticky Messages", name:"Sticky Messages", desc:"Keeps a message at the bottom of a channel."},
+  {tag:"/configure → Temp Channels", name:"Temporary Channels", desc:"Creates temporary voice or text channels with a timer and access controls."},
+  {tag:"/warn /timeout /kick /ban", name:"Moderation", desc:"Warn, timeout, kick or ban members. Warning counts can be checked and reduced."},
+  {tag:"/purge", name:"Purge", desc:"Bulk-deletes messages: all of them, or only those from one user, containing text, or with attachments, embeds or bots."},
+  {tag:"/ask", name:"AI Chat", desc:"Ask an AI a question. Your chats are saved so you can continue, rename or delete them."},
 ];
 
 document.getElementById("modules-grid").innerHTML = modules.map(m => `
-  <div class="module" style="--tick:${m.tick}">
+  <div class="module">
     <div class="tag">${m.tag}</div>
     <h3>${m.name}</h3>
     <p>${m.desc}</p>
@@ -249,23 +253,31 @@ document.getElementById("modules-grid").innerHTML = modules.map(m => `
 // --- Command reference table ---
 try {
 const commands = [
-  ["/antispam enable", "Turn anti-spam protection on for this server"],
-  ["/antispam disable-all", "Turn off every anti-spam system at once"],
-  ["/timeoutuser", "Apply a timeout to a member"],
-  ["/remove-timeout", "Lift a member's timeout early"],
-  ["/remove-warn", "Reduce or clear a member's warning count"],
-  ["/check", "View a member's current spam warnings"],
-  ["/whitelistrole add", "Exempt a role from anti-spam checks"],
-  ["/captcha setup", "Turn on join-verification for new members"],
-  ["/antibot enable", "Turn on raid/bot-join protection"],
-  ["/filter add", "Add a word to the blocked list"],
-  ["/filterword whitelist", "Exempt a user or role from the word filter"],
-  ["/link setup", "Configure link detection and trusted domains"],
-  ["/sticky set", "Pin a message to the bottom of a channel"],
-  ["/autorespond add", "Add a trigger phrase and automatic reply"],
-  ["/temp-channel setup", "Configure on-demand temporary channels"],
-  ["/purge", "Delete a batch of messages from the current channel"],
-  ["/bot status", "Show the bot's current configuration for this server"],
+  ["/configure", "Open the dashboard to set up the bot’s features (Administrator only)"],
+  ["/help", "Get help, with a category for each feature"],
+  ["/antispam status", "Check the anti-spam status for the server and channels"],
+  ["/captcha status", "Check the current CAPTCHA configuration and any errors"],
+  ["/guard status", "Show if Guard is on, who is trusted, the last backup and any problems"],
+  ["/shield status", "Show if Raid Shield is on, the log channel, exempt bots and any problems"],
+  ["/appeals status", "Show if appeals are active, the review channel, the cooldown and how many are pending, accepted and denied"],
+  ["/warndecay status", "Show if warn decay is on, how many warnings are counting down and when the next one expires"],
+  ["/server status", "Show the server’s current configuration and status"],
+  ["/warn", "Warn a member for breaking the rules"],
+  ["/check warn", "Check how many /warn warnings a member has"],
+  ["/check-my warn", "Check your own anti-spam warnings"],
+  ["/remove-warn user", "Reduce a member’s warning count"],
+  ["/timeout user", "Apply a timeout to a member"],
+  ["/remove timeout", "Lift a member’s timeout early"],
+  ["/kick", "Kick a member from the server"],
+  ["/ban", "Ban a member from the server"],
+  ["/disable-all antispam", "Turn off anti-spam protection for the server"],
+  ["/purge all, user, contains, attachments, embeds, bots", "Delete messages in the current channel (needs Manage Messages)"],
+  ["/purge status, list", "See if a deletion is running in this channel, or list all active deletions (admin)"],
+  ["/ask", "Ask the AI a question"],
+  ["/chats list, rename, delete, clear", "Manage your saved /ask chats"],
+  ["/info", "Show bot and system information"],
+  ["/invite", "Get the bot’s invite link"],
+  ["/report", "Report a bug or problem with the bot"],
 ];
 document.getElementById("cmd-body").innerHTML = commands.map(c =>
   `<tr><td><code>${c[0]}</code></td><td>${c[1]}</td></tr>`).join("");
@@ -322,7 +334,7 @@ async function loadStats(){
     text.className = d.online ? "status-live" : "status-off";
     document.getElementById("navdot").style.background = d.online ? "var(--ok)" : "var(--block)";
   }catch(e){
-    text.textContent = "Can't reach bot API ( Bot is Offline or Website is ongoing Maintenance )";
+    text.textContent = "Can’t reach the bot right now. It may be offline or under maintenance.";
     text.className = "status-off";
     document.getElementById("navdot").style.background = "var(--muted)";
   }
