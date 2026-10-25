@@ -178,12 +178,13 @@
     .docs-main{border-left:0;}
     .docs-quick{margin-top:14px;padding-left:13px;}
     .docs-group-btn .caret{margin-right:2px;}
-    .docs-side{overflow:visible;}
-    .docs-group{position:relative;}
-    .docs-group-list{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:8;margin:0;padding:6px;gap:2px;background:var(--panel);border:1px solid var(--line);border-radius:12px;max-height:min(55dvh,420px);overflow-y:auto;box-shadow:0 16px 30px rgba(0,0,0,.45);}
-    .docs-item.active::before{left:3px;}
     .toc-btn{padding:14px 20px;}
     .docs-article{padding:12px 12px 22px;}
+    .docs-side{overflow:visible;}
+    .docs-group{position:relative;}
+    .docs-group-list{position:absolute;left:0;right:0;top:100%;z-index:60;margin-top:6px;padding:6px 6px 6px 18px;max-height:min(60vh,420px);overflow-y:auto;overscroll-behavior:contain;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.45);}
+    .docs-item.active::before{left:-12px;}
+    .toc-list{overscroll-behavior:contain;}
   }
   @media (max-width:520px){.modules{grid-template-columns:1fr;}}
 
@@ -412,20 +413,27 @@ tocBtn.addEventListener("click", (e) => {
 document.addEventListener("click", (e) => {
   if(!copyWrap.contains(e.target)) closeCopyMenu();
   if(!tocList.contains(e.target) && !tocBtn.contains(e.target)) closeToc();
-  if(mobile.matches && !groupList.contains(e.target) && !groupBtn.contains(e.target)) setGroup(false);
 });
-document.addEventListener("keydown", (e) => { if(e.key === "Escape"){ closeCopyMenu(); closeToc(); if(mobile.matches) setGroup(false); } });
+document.addEventListener("keydown", (e) => { if(e.key === "Escape"){ closeCopyMenu(); closeToc(); } });
 
 function setGroup(open){
   groupBtn.setAttribute("aria-expanded", open ? "true" : "false");
   groupList.hidden = !open;
   if(open && mobile.matches){
     const a = groupList.querySelector(".docs-item.active");
-    if(a) groupList.scrollTop = Math.max(0, a.offsetTop - groupList.clientHeight / 2 + a.offsetHeight / 2);
+    if(a) groupList.scrollTop = Math.max(0, a.offsetTop - groupList.clientHeight / 2);
   }
 }
-mobile.addEventListener("change", (e) => setGroup(!e.matches));
 groupBtn.addEventListener("click", () => setGroup(groupBtn.getAttribute("aria-expanded") !== "true"));
+
+// phones: the Explore list is a popover, so it closes like the header menu does
+function closeGroupMobile(){
+  if(mobile.matches && groupBtn.getAttribute("aria-expanded") === "true") setGroup(false);
+}
+window.addEventListener("scroll", () => { closeGroupMobile(); closeToc(); }, {passive:true});
+document.addEventListener("click", (e) => { if(!e.target.closest(".docs-group")) closeGroupMobile(); });
+document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeGroupMobile(); });
+mobile.addEventListener("change", () => setGroup(!mobile.matches));
 
 function showPane(id){
   id = ALIAS[id] || id;
