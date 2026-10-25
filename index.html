@@ -16,7 +16,6 @@
   }
   html{scroll-padding-top:env(safe-area-inset-top,0px);}
   *{box-sizing:inherit;}
-  html,body{height:100%;}
   body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.6;min-height:100dvh;display:flex;flex-direction:column;}
   header{flex-shrink:0;}
   footer{flex-shrink:0;}
@@ -56,28 +55,6 @@
   .status-line{padding:10px 16px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;display:flex;justify-content:space-between;}
   .status-live{color:var(--ok);}
   .status-off{color:var(--muted);}
-
-  section{padding:56px 0;border-bottom:1px solid var(--line);}
-  .section-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:28px;flex-wrap:wrap;}
-  .section-head h2{font-size:24px;}
-  .section-head p{color:var(--muted);font-size:13.5px;margin:0;}
-
-  .modules{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
-  @media (max-width:760px){.modules{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:520px){.modules{grid-template-columns:1fr;}}
-  .module{background:var(--panel);padding:20px;}
-  .module .tag{color:var(--ok);font-size:12px;word-break:break-word;}
-  .module h3{font-size:15.5px;margin:8px 0 8px;}
-  .module p{color:var(--muted);font-size:13px;margin:0;}
-
-  .note{color:var(--muted);font-size:13.5px;margin:0 0 20px;max-width:72ch;}
-  .note code{color:var(--ok);}
-  .cmdtable-scroll{overflow-x:auto;}
-  .cmdtable{width:100%;min-width:480px;border-collapse:collapse;font-size:13.5px;}
-  .cmdtable th{text-align:left;color:var(--muted);font-weight:500;font-size:12px;padding:8px 12px;border-bottom:1px solid var(--line);}
-  .cmdtable td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
-  .cmdtable code{color:var(--ok);}
-  .cmdtable tr:last-child td{border-bottom:none;}
 
   .menu-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer;flex-shrink:0;}
   .menu-btn:hover{background:var(--panel);}
@@ -129,11 +106,11 @@
           <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
           Home
         </a>
-        <a class="dropdown-item" href="#modules" role="menuitem">
+        <a class="dropdown-item" href="/features.html#antispam" role="menuitem">
           <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
-          Modules
+          Features
         </a>
-        <a class="dropdown-item" href="#commands" role="menuitem">
+        <a class="dropdown-item" href="/features.html#moderation" role="menuitem">
           <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
           Commands
         </a>
@@ -160,7 +137,7 @@
       <div class="hero-actions">
         <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1091852954069381200" target="_blank" rel="noopener">Add to server</a>
         <a class="btn btn-ghost" href="https://top.gg/bot/1091852954069381200/vote" target="_blank" rel="noopener">Vote on top.gg</a>
-        <a class="btn btn-ghost" href="#modules">See what it does</a>
+        <a class="btn btn-ghost" href="/features.html">See what it does</a>
       </div>
     </div>
     <div class="console">
@@ -176,31 +153,6 @@
   </div>
 </div>
 
-<section id="modules">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Modules</h2>
-      <p>Each feature works on its own. Turn on only what your server needs.</p>
-    </div>
-    <div class="modules" id="modules-grid"></div>
-  </div>
-</section>
-
-<section id="commands">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Command reference</h2>
-      <p>Most settings live in /configure. These are the other commands.</p>
-    </div>
-    <p class="note"><code>/configure</code> opens a dashboard that only you can see (Administrator only). Pick a feature from the menu and change its settings with buttons and menus. Features marked “owner only” are shown to the server owner.</p>
-    <div class="cmdtable-scroll">
-      <table class="cmdtable">
-        <thead><tr><th>Command</th><th>Does</th></tr></thead>
-        <tbody id="cmd-body"></tbody>
-      </table>
-    </div>
-  </div>
-</section>
 </main>
 
 <footer>
@@ -218,70 +170,6 @@
 // Live stats come through a small relay on Render, so this HTTPS page
 // never calls the bot's plain-HTTP address directly (mixed content).
 const API_BASE = "https://antispam-relay.onrender.com";
-
-// --- Modules grid ---
-try {
-const modules = [
-  {tag:"/configure → Anti-Spam", name:"Anti-Spam", desc:"Detects flooding and repeated messages, deletes them, and escalates through warnings, timeouts, kicks or bans. Includes a whitelist and a log channel."},
-  {tag:"/configure → Anti-Bot", name:"Anti-Bot", desc:"Watches for bot accounts joining in waves and reacts automatically. Has its own log channel."},
-  {tag:"/configure → Duplicate Filter", name:"Duplicate Filter", desc:"Catches the same message posted repeatedly across channels. Trusted members can be whitelisted."},
-  {tag:"/configure → Filter Words", name:"Filter Words", desc:"Blocks the words and phrases you choose. Users and roles can be whitelisted, and blocked messages can be logged."},
-  {tag:"/configure → Link Notifier", name:"Link Notifier", desc:"Logs every link a member posts in a channel you pick, and can delete the message automatically. Whitelisted members’ links are logged but never deleted."},
-  {tag:"/configure → CAPTCHA Verification", name:"CAPTCHA Verification", desc:"Requires new members to verify before they can talk, cutting down bot joins."},
-  {tag:"/configure → Honeypot", name:"Honeypot", desc:"A trap channel real members never use. Hacked accounts and spam bots that post in it are sanctioned automatically."},
-  {tag:"/configure → Guard (owner only)", name:"Guard", desc:"Anti-nuke protection. Reacts to mass channel or role deletion, mass bans, unauthorized bots and waves of new accounts, and rebuilds what was deleted."},
-  {tag:"/configure → Raid Shield (owner only)", name:"Raid Shield", desc:"Stops several bots posting the same message at once, including spam hidden inside forwarded messages."},
-  {tag:"/configure → Appeals", name:"Appeals", desc:"Members can appeal a ban or timeout with a button in their DMs. Staff accept or deny it in a private channel."},
-  {tag:"/configure → Warn Decay", name:"Warn Decay", desc:"Warnings expire after the number of days you set, so old mistakes stop counting."},
-  {tag:"/configure → Join Logs", name:"Join Logs", desc:"Posts a message in a staff channel every time someone joins, with account details and Kick and Ban buttons."},
-  {tag:"/configure → Auto-Respond", name:"Auto Respond", desc:"Replies automatically to the trigger words or phrases you add."},
-  {tag:"/configure → Sticky Messages", name:"Sticky Messages", desc:"Keeps a message at the bottom of a channel."},
-  {tag:"/configure → Temp Channels", name:"Temporary Channels", desc:"Creates temporary voice or text channels with a timer and access controls."},
-  {tag:"/warn /timeout /kick /ban", name:"Moderation", desc:"Warn, timeout, kick or ban members. Warning counts can be checked and reduced."},
-  {tag:"/purge", name:"Purge", desc:"Bulk-deletes messages: all of them, or only those from one user, containing text, or with attachments, embeds or bots."},
-  {tag:"/ask", name:"AI Chat", desc:"Ask an AI a question. Your chats are saved so you can continue, rename or delete them."},
-];
-
-document.getElementById("modules-grid").innerHTML = modules.map(m => `
-  <div class="module">
-    <div class="tag">${m.tag}</div>
-    <h3>${m.name}</h3>
-    <p>${m.desc}</p>
-  </div>`).join("");
-} catch(e) { console.error("Modules render failed:", e); }
-
-// --- Command reference table ---
-try {
-const commands = [
-  ["/configure", "Open the dashboard to set up the bot’s features (Administrator only)"],
-  ["/help", "Get help, with a category for each feature"],
-  ["/antispam status", "Check the anti-spam status for the server and channels"],
-  ["/captcha status", "Check the current CAPTCHA configuration and any errors"],
-  ["/guard status", "Show if Guard is on, who is trusted, the last backup and any problems"],
-  ["/shield status", "Show if Raid Shield is on, the log channel, exempt bots and any problems"],
-  ["/appeals status", "Show if appeals are active, the review channel, the cooldown and how many are pending, accepted and denied"],
-  ["/warndecay status", "Show if warn decay is on, how many warnings are counting down and when the next one expires"],
-  ["/server status", "Show the server’s current configuration and status"],
-  ["/warn", "Warn a member for breaking the rules"],
-  ["/check warn", "Check how many /warn warnings a member has"],
-  ["/check-my warn", "Check your own anti-spam warnings"],
-  ["/remove-warn user", "Reduce a member’s warning count"],
-  ["/timeout user", "Apply a timeout to a member"],
-  ["/remove timeout", "Lift a member’s timeout early"],
-  ["/kick", "Kick a member from the server"],
-  ["/ban", "Ban a member from the server"],
-  ["/disable-all antispam", "Turn off anti-spam protection for the server"],
-  ["/purge all, user, contains, attachments, embeds, bots", "Delete messages in the current channel (needs Manage Messages)"],
-  ["/purge status, list", "See if a deletion is running in this channel, or list all active deletions (admin)"],
-  ["/ask", "Ask the AI a question"],
-  ["/chats list, rename, delete, clear", "Manage your saved /ask chats"],
-  ["/info", "Show bot and system information"],
-  ["/invite", "Get the bot’s invite link"],
-  ["/report", "Report a bug or problem with the bot"],
-];
-document.getElementById("cmd-body").innerHTML = commands.map(c =>
-  `<tr><td><code>${c[0]}</code></td><td>${c[1]}</td></tr>`).join("");
-} catch(e) { console.error("Commands render failed:", e); }
 
 // --- Dropdown menu ---
 try {
