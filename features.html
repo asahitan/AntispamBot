@@ -195,6 +195,19 @@
   .sec-list a,.docs-sub a,.info a{color:var(--ok);}
   .docs-sub code,.body code{color:var(--ok);}
   .docs-side{scroll-behavior:auto;}
+
+  /* Page text animation: when a page is opened from Quickstart / Explore / the header menu,
+     each block of text rises in one after another. */
+  @keyframes pageRise{
+    from{opacity:0;transform:translateY(14px);}
+    to{opacity:1;transform:none;}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .docs-article > *{
+      animation:pageRise .55s cubic-bezier(.2,.7,.2,1) both;
+      animation-delay:calc(min(var(--i,0),14) * 55ms);
+    }
+  }
 </style>
 </head>
 <body>
@@ -442,6 +455,9 @@ function showPane(id){
   const p = BY_ID[id];
   doc.innerHTML = pageHtml(p);
   doc.querySelector(".docs-sub").insertAdjacentElement("afterend", copyWrap);
+  // stagger the text animation: each block gets its position, and the (re-used) copy widget restarts too
+  copyWrap.style.animation = "none"; void copyWrap.offsetWidth; copyWrap.style.animation = "";
+  [...doc.children].forEach((el, i) => el.style.setProperty("--i", i));
   paneBtns.forEach(b => {
     const on = b.dataset.pane === id;
     b.classList.toggle("active", on);
