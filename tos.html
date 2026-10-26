@@ -12,7 +12,7 @@
     --bg:#0F1417; --panel:#161C20; --panel-2:#1B2226; --line:#2A343A;
     --text:#E8EDEF; --muted:#8A969C;
     --ok:#33D17A; --warn:#F5B942; --block:#FF5D5D;
-    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px);
   }
   html{scroll-padding-top:env(safe-area-inset-top,0px);}
   *{box-sizing:inherit;}
@@ -67,12 +67,14 @@
   .dropdown-item:hover .ic{background:var(--bg);}
   .dropdown-divider{height:1px;background:var(--line);margin:6px 4px;}
 
-  footer{border-top:1px solid var(--line);}
-  .foot{padding:36px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--muted);font-size:13px;text-align:center;}
-  .foot-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;}
-  .foot-links a{color:var(--muted);text-decoration:none;}
-  .foot-links a:hover{color:var(--text);text-decoration:underline;}
-  .foot-sep{color:var(--line);}
+  footer{border-top:1px solid var(--line);padding:calc(8px + env(safe-area-inset-bottom,0px)) 0;}
+  .foot{display:flex;align-items:center;justify-content:center;gap:4px 20px;flex-wrap:wrap;text-align:center;}
+  .foot-copy{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);}
+  .foot-links{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .foot-links a{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12.5px;color:#8EC8FA;text-decoration:none;padding:5px 0;}
+  @media (hover:hover){.foot-links a:hover{text-decoration:underline;}}
+  .foot-links a:focus-visible{outline:2px solid var(--ok);outline-offset:2px;border-radius:2px;}
+  .foot-sep{width:1px;height:11px;background:var(--line);flex-shrink:0;}
 
   /* Tablets (portrait/landscape) */
   @media (max-width:768px){
@@ -190,14 +192,15 @@
 
 <footer>
   <div class="wrap foot">
-    <span>&copy; Copyright AntiSpam</span>
-    <div class="foot-links">
-      <a href="/tos.html">Terms of use</a>
-      <span class="foot-sep">|</span>
-      <a href="/privacy.html">Privacy policy</a>
-    </div>
+    <span class="foot-copy">AntiSpam &copy; <span id="footYear">2026</span></span>
+    <nav class="foot-links" aria-label="Legal">
+      <a href="/tos.html">Terms</a>
+      <span class="foot-sep" aria-hidden="true"></span>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
   </div>
 </footer>
+<script>try{document.getElementById("footYear").textContent=new Date().getFullYear();}catch(e){}</script>
 
 <script>
 try {
