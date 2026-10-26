@@ -12,7 +12,7 @@
     --bg:#0F1417; --panel:#161C20; --panel-2:#1B2226; --line:#2A343A;
     --text:#E8EDEF; --muted:#8A969C;
     --ok:#33D17A; --warn:#F5B942; --block:#FF5D5D;
-    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px);
   }
   html{scroll-padding-top:env(safe-area-inset-top,0px);}
   *{box-sizing:inherit;}
@@ -92,14 +92,14 @@
   .dropdown-item:hover .ic{background:var(--bg);}
   .dropdown-divider{height:1px;background:var(--line);margin:6px 4px;}
 
-  .site-foot{flex-shrink:0;margin-top:48px;border-top:1px solid var(--line);padding:30px 28px;display:flex;align-items:center;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;}
-  .foot-copy{font-family:'IBM Plex Mono',monospace;font-size:13.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);}
-  .foot-links{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
-  .foot-links a{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;color:#8EC8FA;text-decoration:none;}
-  .foot-links a:hover{text-decoration:underline;}
-  .foot-links a:focus-visible{outline:2px solid var(--ok);outline-offset:3px;border-radius:2px;}
-  .foot-sep{width:1px;height:14px;background:var(--line);flex-shrink:0;}
-  @media (max-width:520px){.site-foot{padding:24px 18px;margin-top:36px;}}
+  .site-foot{flex-shrink:0;margin-top:16px;border-top:1px solid var(--line);padding:8px 20px calc(8px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;justify-content:space-between;gap:4px 16px;flex-wrap:wrap;}
+  .foot-copy{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);}
+  .foot-links{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .foot-links a{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12.5px;color:#8EC8FA;text-decoration:none;padding:5px 0;}
+  @media (hover:hover){.foot-links a:hover{text-decoration:underline;}}
+  .foot-links a:focus-visible{outline:2px solid var(--ok);outline-offset:2px;border-radius:2px;}
+  .foot-sep{width:1px;height:11px;background:var(--line);flex-shrink:0;}
+  @media (max-width:520px){.site-foot{padding:6px 16px calc(6px + env(safe-area-inset-bottom,0px));margin-top:12px;}}
   @media (prefers-reduced-motion:no-preference){
     .stat .n{transition:opacity .3s ease;}
   }
