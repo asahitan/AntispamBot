@@ -156,6 +156,8 @@
   .copy-menu.open{display:block;}
   .copy-menu button{display:block;width:100%;text-align:left;background:transparent;border:0;color:var(--text);font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14.5px;padding:9px 12px;border-radius:8px;cursor:pointer;}
   .copy-menu button:hover{background:var(--panel-2);}
+  /* Page blocks fade in with their own stacking context, so the open menu must be raised above the blocks after it (but stays under the sticky bar, z-index 5). */
+  .copy-wrap:has(.copy-menu.open){z-index:4;}
 
   .info{border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin:0 0 36px;}
   .info-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;margin:0 0 14px;}
