@@ -3,7 +3,7 @@ export default {
     // Relays the request to your Katabump-hosted bot over plain HTTP,
     // and returns it to the browser over HTTPS with CORS allowed.
     // If your Katabump IP or port ever changes, update the line below.
-    const target = "http://51.83.103.21:20006/api/stats";
+    const target = "http://51.83.103.21:20060/api/stats";
 
     try {
       const res = await fetch(target, { cf: { cacheTtl: 0 } });
