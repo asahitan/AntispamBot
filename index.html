@@ -398,6 +398,34 @@ document.querySelectorAll(".stat[data-metric]").forEach(el => {
 })();
 sparkSelect(spark.metric);
 
+// The bot sends the last hour of samples as "history":
+// [[unix_seconds, guild_count, member_count, blocked_messages, warnings_issued], ...].
+// When it is there every device draws the same graph. Times come from the bot's
+// clock, so a wrong clock on this device cannot hide the graph. When it is
+// missing (older bot or relay) the page falls back to its own samples.
+const SPARK_SERVER_WINDOW = 3700 * 1000;
+function sparkUseServer(h){
+  if(!Array.isArray(h)) return false;
+  const keys = ["guilds", "members", "blocked", "warnings"];
+  const rows = h.filter(p => Array.isArray(p) && p.length >= 5 && typeof p[0] === "number" && isFinite(p[0]));
+  if(rows.length < 2) return false;
+  const last = Math.max(...rows.map(p => p[0])) * 1000;
+  const out = {guilds:[], members:[], blocked:[], warnings:[]};
+  rows.forEach(p => {
+    const t = p[0] * 1000;
+    if(last - t > SPARK_SERVER_WINDOW) return;
+    keys.forEach((k, i) => {
+      const v = p[i + 1];
+      if(typeof v === "number" && isFinite(v)) out[k].push({t, v});
+    });
+  });
+  keys.forEach(k => out[k].sort((a, b) => a.t - b.t));
+  spark.data = out;
+  sparkSave();
+  sparkDraw();
+  return true;
+}
+
 async function loadStats(){
   const dot = document.getElementById("status-dot");
   const text = document.getElementById("status-text");
@@ -409,7 +437,7 @@ async function loadStats(){
     document.getElementById("s-guilds").textContent = fmt(d.guild_count);
     document.getElementById("s-members").textContent = fmt(d.member_count);
     document.getElementById("s-blocked").textContent = fmt(d.blocked_messages);
-    sparkPushAll(d);
+    if(!sparkUseServer(d.history)) sparkPushAll(d);
     document.getElementById("s-warnings").textContent = fmt(d.warnings_issued);
     document.getElementById("uptime").textContent = fmtUptime(d.uptime_seconds);
     text.textContent = d.online ? "connected to bot" : "bot offline";
