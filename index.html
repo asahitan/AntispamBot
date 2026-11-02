@@ -54,6 +54,21 @@
   .stat.ok .n{color:var(--ok);}
   .stat.bad .n{color:var(--block);}
   .stat.warn .n{color:var(--warn);}
+  .stat[data-metric]{cursor:pointer;border-radius:0.25rem;outline:1px solid transparent;outline-offset:6px;transition:outline-color .2s ease;-webkit-tap-highlight-color:transparent;}
+  .stat[data-metric]:hover,.stat[data-metric].active{outline-color:var(--line);}
+  .stat[data-metric].active .l{color:var(--text);}
+  .stat[data-metric]:focus-visible{outline:2px solid var(--ok);}
+  .spark{grid-column:1/-1;}
+  .spark-head{display:flex;justify-content:space-between;gap:0.75rem;color:var(--muted);font-size:0.6875rem;margin-bottom:0.375rem;}
+  .spark-plot{position:relative;height:3.25rem;touch-action:pan-y;cursor:crosshair;}
+  .spark svg{display:block;width:100%;height:100%;overflow:visible;}
+  .spark-guide{position:absolute;top:0;bottom:0;width:1px;background:var(--muted);opacity:.6;display:none;pointer-events:none;}
+  .spark-dot{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--spark-c,var(--block));border:2px solid var(--panel);display:none;pointer-events:none;}
+  .spark-tip{position:absolute;top:0;z-index:2;display:none;pointer-events:none;white-space:nowrap;background:var(--panel-2);border:1px solid var(--line);border-radius:0.25rem;padding:0.125rem 0.5rem;font-size:0.6875rem;color:var(--text);}
+  .spark-axis{display:flex;justify-content:space-between;gap:0.5rem;color:var(--muted);font-size:0.625rem;margin-top:0.375rem;min-height:1em;}
+  .spark-line{fill:none;stroke:var(--spark-c,var(--block));stroke-width:2;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke;}
+  .spark-area{fill:var(--spark-c,var(--block));opacity:.12;stroke:none;}
+  .spark-base{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4;vector-effect:non-scaling-stroke;}
   .status-line{padding:0.625rem 1rem;border-top:1px solid var(--line);color:var(--muted);font-size:0.75rem;display:flex;justify-content:space-between;}
   .status-live{color:var(--ok);}
   .status-off{color:var(--muted);}
@@ -149,10 +164,24 @@
     <div class="console">
       <div class="console-bar"><span>live-status.log</span><span id="uptime">uptime —</span></div>
       <div class="console-body">
-        <div class="stat ok"><div class="n" id="s-guilds">—</div><div class="l">servers protected</div></div>
-        <div class="stat"><div class="n" id="s-members">—</div><div class="l">members covered</div></div>
-        <div class="stat bad"><div class="n" id="s-blocked">—</div><div class="l">spam messages blocked</div></div>
-        <div class="stat warn"><div class="n" id="s-warnings">—</div><div class="l">warnings issued</div></div>
+        <div class="spark" id="spark">
+          <div class="spark-head"><span id="spark-title">spam messages blocked · trend</span><span id="spark-note">collecting data…</span></div>
+          <div class="spark-plot" id="spark-plot">
+            <svg viewBox="0 0 300 48" preserveAspectRatio="none" role="img" aria-label="Trend graph with timestamps">
+              <line class="spark-base" x1="0" y1="47" x2="300" y2="47"/>
+              <path class="spark-area" id="spark-area" d=""/>
+              <polyline class="spark-line" id="spark-line" points=""/>
+            </svg>
+            <div class="spark-guide" id="spark-guide"></div>
+            <div class="spark-dot" id="spark-dot"></div>
+            <div class="spark-tip" id="spark-tip"></div>
+          </div>
+          <div class="spark-axis"><span id="spark-t0"></span><span id="spark-tm"></span><span id="spark-t1"></span></div>
+        </div>
+        <div class="stat ok" data-metric="guilds" role="button" tabindex="0" aria-pressed="false" title="Show servers graph"><div class="n" id="s-guilds">—</div><div class="l">servers protected</div></div>
+        <div class="stat" data-metric="members" role="button" tabindex="0" aria-pressed="false" title="Show members graph"><div class="n" id="s-members">—</div><div class="l">members covered</div></div>
+        <div class="stat bad" data-metric="blocked" role="button" tabindex="0" aria-pressed="false" title="Show spam blocked graph"><div class="n" id="s-blocked">—</div><div class="l">spam messages blocked</div></div>
+        <div class="stat warn" data-metric="warnings" role="button" tabindex="0" aria-pressed="false" title="Show warnings graph"><div class="n" id="s-warnings">—</div><div class="l">warnings issued</div></div>
       </div>
       <div class="status-line"><span id="status-text" class="status-off">checking connection…</span><span id="status-dot"></span></div>
     </div>
@@ -212,6 +241,163 @@ function fmtUptime(s){
   return `uptime ${h}h ${m}m`;
 }
 
+const SPARK_KEY = "antispam_spark_v3", SPARK_OLD_KEYS = ["antispam_spark_v1", "antispam_spark_v2"];
+const SPARK_MAX = 60, SPARK_WINDOW = 30 * 60 * 1000; // last 30 minutes of samples
+const METRICS = {
+  guilds:   {field:"guild_count",      label:"servers protected",     color:"var(--ok)"},
+  members:  {field:"member_count",     label:"members covered",       color:"#8EC8FA"},
+  blocked:  {field:"blocked_messages", label:"spam messages blocked", color:"var(--block)"},
+  warnings: {field:"warnings_issued",  label:"warnings issued",       color:"var(--warn)"}
+};
+function isMetric(k){ return Object.prototype.hasOwnProperty.call(METRICS, k); }
+function fmtClock(ms, withSeconds){
+  const o = {hour:"2-digit", minute:"2-digit"};
+  if(withSeconds) o.second = "2-digit";
+  try{ return new Date(ms).toLocaleTimeString([], o); }catch(e){ return ""; }
+}
+function fmtDur(ms){
+  const s = Math.round(ms / 1000);
+  return s < 60 ? `${s}s` : `${Math.round(s / 60)}m`;
+}
+function cleanPts(a, now){
+  if(!Array.isArray(a)) return [];
+  return a
+    .filter(p => p && typeof p.t === "number" && isFinite(p.t) && typeof p.v === "number" && isFinite(p.v)
+                 && p.t <= now + 60000 && now - p.t <= SPARK_WINDOW)
+    .sort((x, y) => x.t - y.t)
+    .slice(-SPARK_MAX)
+    .map(p => ({t:p.t, v:p.v}));
+}
+function sparkLoad(){
+  const now = Date.now();
+  const st = {metric:"blocked", data:{guilds:[], members:[], blocked:[], warnings:[]}};
+  try{
+    const raw = localStorage.getItem(SPARK_KEY);
+    if(raw){
+      const o = JSON.parse(raw);
+      if(o && typeof o === "object"){
+        if(isMetric(o.metric)) st.metric = o.metric;
+        if(o.data && typeof o.data === "object"){
+          for(const k in METRICS) st.data[k] = cleanPts(o.data[k], now);
+        }
+      }
+    }
+  }catch(e){}
+  try{ SPARK_OLD_KEYS.forEach(k => localStorage.removeItem(k)); }catch(e){}
+  return st;
+}
+const spark = sparkLoad();
+let sparkView = null;
+function sparkSave(){ try{ localStorage.setItem(SPARK_KEY, JSON.stringify(spark)); }catch(e){} }
+function sparkHide(){
+  ["spark-guide", "spark-dot", "spark-tip"].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.style.display = "none";
+  });
+}
+function sparkDraw(){
+  const box = document.getElementById("spark");
+  const line = document.getElementById("spark-line");
+  const area = document.getElementById("spark-area");
+  const note = document.getElementById("spark-note");
+  const title = document.getElementById("spark-title");
+  const a0 = document.getElementById("spark-t0");
+  const am = document.getElementById("spark-tm");
+  const a1 = document.getElementById("spark-t1");
+  if(!box || !line || !area || !note || !title || !a0 || !am || !a1) return;
+  const m = METRICS[spark.metric];
+  box.style.setProperty("--spark-c", m.color);
+  title.textContent = m.label + " · trend";
+  sparkHide();
+  const W = 300, H = 48, P = 3, d = spark.data[spark.metric];
+  if(d.length < 2){
+    sparkView = null;
+    line.setAttribute("points", `0,${H/2} ${W},${H/2}`);
+    area.setAttribute("d", "");
+    note.textContent = "collecting data…";
+    a0.textContent = ""; am.textContent = ""; a1.textContent = "";
+    return;
+  }
+  const t0 = d[0].t, t1 = d[d.length - 1].t, tspan = (t1 - t0) || 1;
+  const vals = d.map(p => p.v);
+  const min = Math.min(...vals), max = Math.max(...vals), span = (max - min) || 1;
+  const pts = d.map(p => ({
+    t: p.t, v: p.v,
+    x: ((p.t - t0) / tspan) * W,
+    y: max === min ? H/2 : H - P - ((p.v - min) / span) * (H - 2*P)
+  }));
+  const list = pts.map(p => p.x.toFixed(1) + "," + p.y.toFixed(1));
+  line.setAttribute("points", list.join(" "));
+  area.setAttribute("d", "M" + pts[0].x.toFixed(1) + "," + H + " L" + list.join(" L") + " L" + pts[pts.length - 1].x.toFixed(1) + "," + H + " Z");
+  sparkView = {pts, t0, t1, W, H};
+  a0.textContent = fmtClock(t0);
+  am.textContent = fmtClock(t0 + (t1 - t0) / 2);
+  a1.textContent = fmtClock(t1);
+  const diff = d[d.length - 1].v - d[0].v;
+  const tail = `in last ${fmtDur(t1 - t0)}`;
+  note.textContent = diff > 0 ? `+${fmt(diff)} ${tail}` : diff < 0 ? `-${fmt(-diff)} ${tail}` : `no change ${tail}`;
+}
+function sparkHover(e){
+  const plot = document.getElementById("spark-plot");
+  const guide = document.getElementById("spark-guide");
+  const dot = document.getElementById("spark-dot");
+  const tip = document.getElementById("spark-tip");
+  const v = sparkView;
+  if(!plot || !guide || !dot || !tip || !v) return;
+  const r = plot.getBoundingClientRect();
+  if(!r.width) return;
+  const f = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+  const target = v.t0 + f * (v.t1 - v.t0);
+  let best = v.pts[0];
+  for(const p of v.pts){ if(Math.abs(p.t - target) < Math.abs(best.t - target)) best = p; }
+  const lx = (best.x / v.W) * 100, ly = (best.y / v.H) * 100;
+  guide.style.left = lx + "%";
+  dot.style.left = lx + "%";
+  dot.style.top = ly + "%";
+  tip.textContent = `${fmt(best.v)} · ${fmtClock(best.t, true)}`;
+  tip.style.left = lx + "%";
+  tip.style.transform = lx > 55 ? "translateX(calc(-100% - 8px))" : "translateX(8px)";
+  guide.style.display = "block";
+  dot.style.display = "block";
+  tip.style.display = "block";
+}
+function sparkPushAll(d){
+  const now = Date.now();
+  for(const k in METRICS){
+    const val = d[METRICS[k].field];
+    if(typeof val === "number" && isFinite(val)) spark.data[k].push({t:now, v:val});
+    spark.data[k] = cleanPts(spark.data[k], now);
+  }
+  sparkSave();
+  sparkDraw();
+}
+function sparkSelect(k){
+  if(!isMetric(k)) return;
+  spark.metric = k;
+  document.querySelectorAll(".stat[data-metric]").forEach(el => {
+    const on = el.dataset.metric === k;
+    el.classList.toggle("active", on);
+    el.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+  sparkSave();
+  sparkDraw();
+}
+document.querySelectorAll(".stat[data-metric]").forEach(el => {
+  el.addEventListener("click", () => sparkSelect(el.dataset.metric));
+  el.addEventListener("keydown", (e) => {
+    if(e.key === "Enter" || e.key === " "){ e.preventDefault(); sparkSelect(el.dataset.metric); }
+  });
+});
+(function(){
+  const plot = document.getElementById("spark-plot");
+  if(!plot) return;
+  plot.addEventListener("pointermove", sparkHover);
+  plot.addEventListener("pointerdown", sparkHover);
+  plot.addEventListener("pointerleave", sparkHide);
+  plot.addEventListener("pointercancel", sparkHide);
+})();
+sparkSelect(spark.metric);
+
 async function loadStats(){
   const dot = document.getElementById("status-dot");
   const text = document.getElementById("status-text");
@@ -223,6 +409,7 @@ async function loadStats(){
     document.getElementById("s-guilds").textContent = fmt(d.guild_count);
     document.getElementById("s-members").textContent = fmt(d.member_count);
     document.getElementById("s-blocked").textContent = fmt(d.blocked_messages);
+    sparkPushAll(d);
     document.getElementById("s-warnings").textContent = fmt(d.warnings_issued);
     document.getElementById("uptime").textContent = fmtUptime(d.uptime_seconds);
     text.textContent = d.online ? "connected to bot" : "bot offline";
