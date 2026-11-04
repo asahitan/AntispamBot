@@ -217,6 +217,46 @@
       animation-delay:calc(min(var(--i,0),14) * 55ms);
     }
   }
+  /* Search: header button + a dialog that searches every page */
+  .nav-actions{display:flex;align-items:center;gap:10px;}
+  .search-btn{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 10px 0 9px;border-radius:8px;border:1px solid var(--line);background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:13.5px;cursor:pointer;flex-shrink:0;}
+  .search-btn:hover{background:var(--panel);color:var(--text);}
+  .search-btn:focus-visible{outline:2px solid var(--ok);outline-offset:2px;}
+  .search-btn kbd{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;line-height:17px;}
+  @media (hover:none){.search-btn kbd{display:none;}}
+  @media (max-width:480px){.search-btn{width:32px;padding:0;justify-content:center;}.search-btn .lbl,.search-btn kbd{display:none;}}
+
+  html.search-open{overflow:hidden;}
+  .search-overlay{position:fixed;inset:0;z-index:200;background:rgba(6,9,11,.72);display:flex;align-items:flex-start;justify-content:center;padding:calc(10vh + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px));}
+  .search-overlay[hidden]{display:none;}
+  .search-box{width:100%;max-width:640px;max-height:80vh;max-height:min(80dvh,640px);display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.55);overflow:hidden;}
+  @media (max-width:640px){
+    .search-overlay{padding-top:calc(12px + env(safe-area-inset-top,0px));}
+    .search-box{max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));}
+  }
+  .search-field{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);color:var(--muted);flex-shrink:0;}
+  .search-field svg{flex-shrink:0;}
+  .search-field input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:16px;padding:6px 0;-webkit-appearance:none;appearance:none;}
+  .search-field input::placeholder{color:var(--muted);}
+  .search-field input::-webkit-search-cancel-button,.search-field input::-webkit-search-decoration{-webkit-appearance:none;display:none;}
+  .search-close{flex-shrink:0;background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:3px 8px;cursor:pointer;}
+  .search-close:hover{color:var(--text);background:var(--panel-2);}
+  .search-close:focus-visible{outline:2px solid var(--ok);outline-offset:2px;}
+  .search-results{overflow-y:auto;overscroll-behavior:contain;padding:6px;flex:1 1 auto;min-height:0;scrollbar-width:thin;scrollbar-color:var(--line) transparent;}
+  .search-label{padding:8px 10px 4px;font-size:12px;color:var(--muted);}
+  .search-item{display:block;padding:9px 10px;border-radius:10px;cursor:pointer;}
+  .search-item.active{background:var(--panel-2);}
+  .si-top{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .si-page{color:var(--ok);font-size:12px;word-break:break-word;}
+  .si-head{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14.5px;color:var(--text);}
+  .si-snip{display:block;margin-top:3px;color:var(--muted);font-size:12.5px;line-height:1.5;word-break:break-word;}
+  .search-item mark{background:rgba(51,209,122,.22);color:var(--text);border-radius:3px;padding:0 1px;}
+  .search-empty{padding:28px 14px;text-align:center;color:var(--muted);font-size:13.5px;}
+  .search-foot{flex-shrink:0;border-top:1px solid var(--line);padding:8px 14px;color:var(--muted);font-size:11.5px;display:flex;gap:6px 16px;flex-wrap:wrap;}
+  @media (hover:none){.search-foot{display:none;}}
+  .sec-h{transition:background-color .6s ease,box-shadow .6s ease;}
+  .sec-h.hit{background:rgba(51,209,122,.16);box-shadow:0 0 0 6px rgba(51,209,122,.16);border-radius:4px;}
+  @media (prefers-reduced-motion:reduce){.sec-h{transition:none;}}
 </style>
 </head>
 <body>
@@ -224,6 +264,8 @@
 <header>
   <div class="nav">
     <div class="brand"><img class="brand-logo" src="data:image/png;base64,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" alt="AntiSpam logo">AntiSpam<span class="dot" id="navdot"></span></div>
+    <div class="nav-actions">
+      <button type="button" class="search-btn" id="searchBtn" aria-label="Search" aria-haspopup="dialog" aria-expanded="false" aria-controls="searchOverlay" title="Search ( / )"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="lbl">Search</span><kbd aria-hidden="true">/</kbd></button>
     <div class="dropdown-wrap">
       <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="dropdownMenu">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>
@@ -252,6 +294,7 @@
           Support me on Ko-fi
         </a>
       </div>
+    </div>
     </div>
   </div>
 </header>
@@ -291,6 +334,18 @@
   </div>
 </div>
 </main>
+
+<div class="search-overlay" id="searchOverlay" hidden>
+  <div class="search-box" role="dialog" aria-modal="true" aria-label="Search the features pages">
+    <div class="search-field">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="search" role="combobox" aria-expanded="true" aria-controls="searchResults" aria-autocomplete="list" aria-label="Search" placeholder="Search features, commands and settings" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="search">
+      <button type="button" class="search-close" id="searchClose" aria-label="Close search">Esc</button>
+    </div>
+    <div class="search-results" id="searchResults" role="listbox" aria-label="Search results"></div>
+    <div class="search-foot" aria-hidden="true"><span>Up and down to move</span><span>Enter to open</span><span>Esc to close</span></div>
+  </div>
+</div>
 
 <script>
 const API_BASE = "https://antispam-relay.onrender.com";
@@ -499,6 +554,196 @@ document.querySelectorAll('header a[href^="#"]').forEach(a => {
 });
 function fromHash(){ showPane(location.hash.replace("#", "") || DEFAULT); }
 window.addEventListener("hashchange", () => { fromHash(); window.scrollTo(0, 0); });
+// --- Search ---
+const searchBtn = document.getElementById("searchBtn");
+const searchOverlay = document.getElementById("searchOverlay");
+const searchInput = document.getElementById("searchInput");
+const searchClose = document.getElementById("searchClose");
+const searchResults = document.getElementById("searchResults");
+
+function plain(s){
+  return s.replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, "$1").replace(/`([^`]+)`/g, "$1")
+          .replace(/\*\*([^*]+)\*\*/g, "$1").replace(/\*([^*]+)\*/g, "$1");
+}
+// same length as the input, so positions found in the folded text are valid in the original
+function fold(s){ return s.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"'); }
+function escRe(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }
+
+// one entry per page (si = -1) and one per section
+const INDEX = [];
+ALL.forEach(p => {
+  const sub = plain(p.sub), who = plain(p.who);
+  INDEX.push({ pid: p.id, name: p.name, heading: null, si: -1, items: [sub, who], hay: fold(p.name + " " + p.title + " " + sub + " " + who) });
+  p.sections.forEach((s, si) => {
+    const items = [].concat(s.p || [], s.ul || [], s.ol || []).map(plain);
+    INDEX.push({ pid: p.id, name: p.name, heading: s.h, si: si, items: items, hay: fold(s.h + " " + p.name + " " + items.join(" ")) });
+  });
+});
+
+function runSearch(q){
+  const tokens = fold(q).trim().split(/\s+/).filter(Boolean).slice(0, 8);
+  if(!tokens.length) return null;
+  const res = tokens.map(t => new RegExp(escRe(t), "i"));
+  const out = [];
+  INDEX.forEach((e, order) => {
+    if(!res.every(r => r.test(e.hay))) return;
+    const nameF = fold(e.name), headF = e.heading ? fold(e.heading) : "";
+    let score = e.heading === null ? 4 : 0;
+    res.forEach(r => { if(r.test(nameF)) score += 8; if(headF && r.test(headF)) score += 6; });
+    let best = -1, bestHits = 0;
+    e.items.forEach((it, i) => {
+      const f = fold(it), hits = res.filter(r => r.test(f)).length;
+      if(hits > bestHits){ bestHits = hits; best = i; }
+    });
+    score += bestHits * 2 + (bestHits === res.length ? 3 : 0);
+    out.push({ e: e, score: score, order: order, item: best >= 0 ? e.items[best] : (e.items[0] || "") });
+  });
+  out.sort((a, b) => b.score - a.score || a.order - b.order);
+  return { tokens: tokens, list: out.slice(0, 40) };
+}
+
+function snippet(text, tokens, len){
+  const f = fold(text);
+  let at = -1;
+  tokens.forEach(t => { const i = f.search(new RegExp(escRe(t), "i")); if(i >= 0 && (at < 0 || i < at)) at = i; });
+  let start = 0;
+  if(at > 70){
+    start = at - 50;
+    const sp = text.indexOf(" ", start);
+    if(sp >= 0 && sp < at) start = sp + 1;
+  }
+  return (start > 0 ? "\u2026" : "") + text.slice(start, start + len) + (start + len < text.length ? "\u2026" : "");
+}
+// escapes the text and wraps every match in <mark>
+function hl(text, tokens){
+  if(!tokens || !tokens.length) return esc(text);
+  const f = fold(text);
+  const re = new RegExp(tokens.slice().sort((a, b) => b.length - a.length).map(escRe).join("|"), "gi");
+  let out = "", last = 0, m;
+  while((m = re.exec(f))){
+    if(m[0] === ""){ re.lastIndex++; continue; }
+    out += esc(text.slice(last, m.index)) + "<mark>" + esc(text.slice(m.index, m.index + m[0].length)) + "</mark>";
+    last = m.index + m[0].length;
+  }
+  return out + esc(text.slice(last));
+}
+
+let shown = [], active = -1, lastFocus = null, hitTimer;
+function itemHtml(i, top, snip){
+  return '<div class="search-item" role="option" id="sr-' + i + '" data-i="' + i + '" aria-selected="false">' + top +
+         (snip ? '<span class="si-snip">' + snip + '</span>' : "") + '</div>';
+}
+function setActive(i, scroll){
+  const prev = searchResults.querySelector(".search-item.active");
+  if(prev){ prev.classList.remove("active"); prev.setAttribute("aria-selected", "false"); }
+  active = i;
+  const el = i >= 0 ? document.getElementById("sr-" + i) : null;
+  if(el){
+    el.classList.add("active"); el.setAttribute("aria-selected", "true");
+    searchInput.setAttribute("aria-activedescendant", el.id);
+    if(scroll) el.scrollIntoView({ block: "nearest" });
+  } else {
+    searchInput.removeAttribute("aria-activedescendant");
+  }
+}
+function renderResults(){
+  const q = searchInput.value;
+  const r = runSearch(q);
+  let html = "";
+  shown = [];
+  if(!r){
+    html = '<div class="search-label">Jump to a page, or type to search all of them</div>';
+    ALL.forEach(p => {
+      shown.push({ pid: p.id, si: -1 });
+      html += itemHtml(shown.length - 1, '<span class="si-top"><span class="si-head">' + esc(p.name) + '</span></span>', esc(plain(p.sub)));
+    });
+  } else if(!r.list.length){
+    html = '<div class="search-empty">Nothing found for \u201c' + esc(q.trim()) + '\u201d. Try a shorter word or a different spelling.</div>';
+  } else {
+    r.list.forEach(x => {
+      shown.push({ pid: x.e.pid, si: x.e.si });
+      const top = x.e.heading === null
+        ? '<span class="si-top"><span class="si-head">' + hl(x.e.name, r.tokens) + '</span><span class="si-page">page</span></span>'
+        : '<span class="si-top"><span class="si-page">' + hl(x.e.name, r.tokens) + '</span><span class="si-head">' + hl(x.e.heading, r.tokens) + '</span></span>';
+      html += itemHtml(shown.length - 1, top, hl(snippet(x.item, r.tokens, 150), r.tokens));
+    });
+  }
+  searchResults.innerHTML = html;
+  searchResults.scrollTop = 0;
+  setActive(shown.length ? 0 : -1, false);
+}
+
+function openSearch(){
+  if(!searchOverlay.hidden) return;
+  lastFocus = document.activeElement;
+  searchOverlay.hidden = false;
+  document.documentElement.classList.add("search-open");
+  searchBtn.setAttribute("aria-expanded", "true");
+  searchInput.value = "";
+  renderResults();
+  searchInput.focus();
+}
+function closeSearch(restoreFocus){
+  if(searchOverlay.hidden) return;
+  searchOverlay.hidden = true;
+  document.documentElement.classList.remove("search-open");
+  searchBtn.setAttribute("aria-expanded", "false");
+  if(restoreFocus && lastFocus && lastFocus.focus) lastFocus.focus();
+}
+function chooseResult(i){
+  const t = shown[i];
+  if(!t) return;
+  closeSearch(false);
+  go(t.pid);
+  if(t.si >= 0){
+    // wait one frame so the new page is in the document, then jump to the section and flash its heading
+    requestAnimationFrame(() => {
+      const h = doc.querySelectorAll("h3.sec-h")[t.si];
+      if(!h) return;
+      h.scrollIntoView({ behavior: reduceMotion.matches ? "auto" : "smooth", block: "start" });
+      document.querySelectorAll("h3.sec-h.hit").forEach(x => x.classList.remove("hit"));
+      h.classList.add("hit");
+      clearTimeout(hitTimer);
+      hitTimer = setTimeout(() => h.classList.remove("hit"), 1600);
+    });
+  }
+}
+
+searchBtn.addEventListener("click", openSearch);
+searchClose.addEventListener("click", () => closeSearch(true));
+searchOverlay.addEventListener("mousedown", (e) => { if(e.target === searchOverlay) closeSearch(true); });
+searchInput.addEventListener("input", renderResults);
+searchInput.addEventListener("keydown", (e) => {
+  if(e.isComposing) return;
+  if(e.key === "ArrowDown"){ e.preventDefault(); if(shown.length) setActive((active + 1) % shown.length, true); }
+  else if(e.key === "ArrowUp"){ e.preventDefault(); if(shown.length) setActive((active - 1 + shown.length) % shown.length, true); }
+  else if(e.key === "Enter"){ e.preventDefault(); if(active >= 0) chooseResult(active); }
+});
+searchResults.addEventListener("click", (e) => {
+  const it = e.target.closest(".search-item");
+  if(it) chooseResult(+it.dataset.i);
+});
+searchResults.addEventListener("mousemove", (e) => {
+  const it = e.target.closest(".search-item");
+  if(it && +it.dataset.i !== active) setActive(+it.dataset.i, false);
+});
+// keep Tab inside the dialog
+searchOverlay.addEventListener("keydown", (e) => {
+  if(e.key !== "Tab") return;
+  e.preventDefault();
+  const f = [searchInput, searchClose], i = f.indexOf(document.activeElement);
+  f[e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i >= f.length - 1 ? 0 : i + 1)].focus();
+});
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape" && !searchOverlay.hidden){ closeSearch(true); return; }
+  if((e.ctrlKey || e.metaKey) && !e.altKey && e.key.toLowerCase() === "k"){ e.preventDefault(); openSearch(); return; }
+  if(e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey){
+    const t = e.target, tag = t && t.tagName;
+    if(tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (t && t.isContentEditable)) return;
+    e.preventDefault(); openSearch();
+  }
+});
+
 if(mobile.matches) setGroup(false);
 fromHash();
 } catch(e) { console.error("Docs wiring failed:", e); }
