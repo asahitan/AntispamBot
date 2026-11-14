@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="discord">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -147,7 +147,76 @@
     .sn-sub,.site-nav,.sn-link .chev{transition:none !important;}
   }
 </style>
-<base target="_blank">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("as-theme")==="classic")document.documentElement.setAttribute("data-theme","classic");}catch(e){}</script>
+<style id="site-theme">
+/* Design switch (footer) */
+.theme-toggle{display:inline-flex;align-items:stretch;border:1px solid var(--line);border-radius:6px;overflow:hidden;flex-shrink:0;}
+.theme-toggle button{-webkit-appearance:none;appearance:none;margin:0;border:0;background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:1.5;padding:4px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.theme-toggle button + button{border-left:1px solid var(--line);}
+.theme-toggle button:hover{color:var(--text);}
+.theme-toggle button[aria-pressed="true"]{background:var(--panel-2);color:var(--text);}
+.theme-toggle button:focus-visible{outline:2px solid var(--ok);outline-offset:-2px;}
+
+html[data-theme="discord"]{color-scheme:dark;
+  --bg:#313338; --panel:#2B2D31; --panel-2:#35373C; --line:#3F4147; --dark:#1E1F22;
+  --text:#F2F3F5; --muted:#B5BAC1;
+  --ok:#23A55A; --warn:#F0B232; --block:#F23F42;
+  --brand:#5865F2; --brand-hover:#4752C4; --link:#00A8FC;
+  --sans:'gg sans','Noto Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono',Consolas,'Courier New',monospace;}
+html[data-theme="discord"]{scrollbar-color:#1A1B1E #2B2D31;}
+html[data-theme="discord"] body{-webkit-font-smoothing:antialiased;}
+html[data-theme="discord"] ::selection{background:rgba(0,106,255,.4);}
+html[data-theme="discord"] body,html[data-theme="discord"] body *{font-family:var(--sans) !important;}
+html[data-theme="discord"] body :is(code,kbd,samp,pre,.console-bar,.console-bar *,.spark-head,.spark-head *,.spark-axis,.spark-axis *,.spark-tip,.status-line,.status-line *){font-family:var(--mono) !important;}
+html[data-theme="discord"] body :focus-visible{outline-color:var(--link) !important;}
+html[data-theme="discord"] header{background:var(--dark);border-bottom-color:#17181B;box-shadow:0 1px 0 rgba(4,4,5,.2),0 2px 6px rgba(4,4,5,.18);}
+html[data-theme="discord"] footer,html[data-theme="discord"] .site-foot{background:var(--panel);border-top-color:#1E1F22;}
+html[data-theme="discord"] .foot-links a{color:var(--link);}
+html[data-theme="discord"] .sn-link:hover,html[data-theme="discord"] .sn-item.open > .sn-link{background:var(--panel-2);}
+html[data-theme="discord"] .sn-link[aria-current="page"],html[data-theme="discord"] .sn-item.is-current > .sn-link{box-shadow:inset 0 -2px 0 var(--brand);}
+@media (max-width:900px){html[data-theme="discord"] .sn-link[aria-current="page"],html[data-theme="discord"] .sn-item.is-current > .sn-link{box-shadow:inset 3px 0 0 var(--brand);}}
+@media (min-width:901px){html[data-theme="discord"] .sn-sub{background:#111214;border:1px solid #1E1F22;border-top:0;border-radius:0 0 8px 8px;padding:6px;min-width:200px;box-shadow:0 8px 16px rgba(0,0,0,.4);}
+html[data-theme="discord"] .sn-sub .sn-sub{border-top:1px solid #1E1F22;border-radius:8px;}
+html[data-theme="discord"] .sn-sub > li + li{border-top:0;margin-top:2px;}
+html[data-theme="discord"] .sn-sub a,html[data-theme="discord"] .sn-sub .sn-trigger,html[data-theme="discord"] .sn-sub > li:last-child > a,html[data-theme="discord"] .sn-sub > li:last-child > .sn-trigger,html[data-theme="discord"] .sn-sub .sn-sub > li:first-child > a{padding:8px 10px;border-radius:4px;font-weight:500;color:#DBDEE1;}
+html[data-theme="discord"] .sn-sub a:hover,html[data-theme="discord"] .sn-sub .sn-trigger:hover,html[data-theme="discord"] .sn-sub li.open > .sn-trigger{background:var(--brand);color:#fff;}
+html[data-theme="discord"] .sn-sub .sn-trigger:hover .chev,html[data-theme="discord"] .sn-sub li.open > .sn-trigger .chev{color:#fff;}}
+html[data-theme="discord"] .btn{background:var(--brand);color:#fff;border-radius:3px;font-weight:500;transition:background-color .17s ease;}
+html[data-theme="discord"] .btn:hover{background:var(--brand-hover);filter:none;}
+html[data-theme="discord"] .btn.btn-ghost{background:#4E5058;border:1px solid transparent;color:#fff;}
+html[data-theme="discord"] .btn.btn-ghost:hover{background:#6D6F78;}
+html[data-theme="discord"] :not(pre) > code,html[data-theme="discord"] .note code,html[data-theme="discord"] .cmdtable code,html[data-theme="discord"] .sec-list code,html[data-theme="discord"] .info code,html[data-theme="discord"] .body code,html[data-theme="discord"] .docs-sub code,html[data-theme="discord"] .section-head code,html[data-theme="discord"] .sub code{background:rgba(88,101,242,.3);color:#C9CDFB;padding:.1em .4em;border-radius:3px;font-size:.92em;}
+html[data-theme="discord"] .body a,html[data-theme="discord"] .sec-list a,html[data-theme="discord"] .docs-sub a,html[data-theme="discord"] .info a,html[data-theme="discord"] .legal-content a{color:var(--link);}
+html[data-theme="discord"] .module .tag,html[data-theme="discord"] .si-page{color:#949CF7;}
+html[data-theme="discord"] .console{background:var(--panel);border:1px solid #1E1F22;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.35);}
+html[data-theme="discord"] .console-bar{background:#232428;}
+html[data-theme="discord"] .stat[data-metric]:hover,html[data-theme="discord"] .stat[data-metric].active{outline-color:var(--brand);}
+html[data-theme="discord"] .docs-side{background:var(--panel);}
+html[data-theme="discord"] .docs-main{border-left-color:#1E1F22;}
+html[data-theme="discord"] .docs-item,html[data-theme="discord"] .docs-group-btn{border-radius:4px;}
+html[data-theme="discord"] .docs-item:hover,html[data-theme="discord"] .docs-group-btn:hover{background:var(--panel-2);}
+html[data-theme="discord"] .docs-item.active{background:#404249;color:#fff;}
+html[data-theme="discord"] .docs-item.active::before{background:#fff;}
+html[data-theme="discord"] .docs-quick{border-radius:8px;}
+html[data-theme="discord"] .modules{gap:12px;background:none;border:0;}
+html[data-theme="discord"] .module{border:1px solid #232428;border-radius:8px;transition:background-color .15s ease,border-color .15s ease;}
+html[data-theme="discord"] .module:hover{background:var(--panel-2);border-color:var(--line);}
+html[data-theme="discord"] .info{background:var(--panel);border:0;border-left:4px solid var(--brand);border-radius:4px;}
+html[data-theme="discord"] .cmdtable tbody tr:hover{background:rgba(255,255,255,.03);}
+html[data-theme="discord"] .ann-item{margin-inline:-.75rem;padding-left:.75rem;padding-right:.75rem;border-radius:4px;border-bottom-color:rgba(255,255,255,.05);transition:background-color .1s ease;}
+html[data-theme="discord"] .ann-item:hover{background:rgba(4,4,5,.14);}
+html[data-theme="discord"] .ann-avatar{width:2.5rem;height:2.5rem;}
+html[data-theme="discord"] .docs-quick{background:rgba(88,101,242,.14);}
+html[data-theme="discord"] .docs-quick:hover{background:rgba(88,101,242,.22);}
+html[data-theme="discord"] .docs-quick.active{border-color:rgba(88,101,242,.65);}
+html[data-theme="discord"] .search-item mark{background:rgba(88,101,242,.35);}
+html[data-theme="discord"] .sec-h.hit{background:rgba(88,101,242,.2);box-shadow:0 0 0 6px rgba(88,101,242,.2);}
+html[data-theme="discord"] .theme-toggle{border-color:#1E1F22;border-radius:4px;background:#232428;}
+html[data-theme="discord"] .theme-toggle button + button{border-left-color:#1E1F22;}
+html[data-theme="discord"] .theme-toggle button[aria-pressed="true"]{background:var(--brand);color:#fff;}
+</style>
 </head>
 <body>
 
@@ -249,6 +318,7 @@
       <span class="foot-sep" aria-hidden="true"></span>
       <a href="/privacy.html">Privacy</a>
     </nav>
+<div class="theme-toggle" id="themeToggle" role="group" aria-label="Site design"><button type="button" data-theme-set="discord" aria-pressed="true">Discord</button><button type="button" data-theme-set="classic" aria-pressed="false">Classic</button></div>
   </div>
 </footer>
 <script>try{document.getElementById("footYear").textContent=new Date().getFullYear();}catch(e){}</script>
@@ -387,6 +457,30 @@ try {
 } catch(e) { console.error("Menu wiring failed:", e); }
 
 } catch(e) { console.error("Dropdown wiring failed:", e); }
+</script>
+<script>
+(function(){
+  var root=document.documentElement,box=document.getElementById("themeToggle");
+  if(!box) return;
+  var btns=Array.prototype.slice.call(box.querySelectorAll("button[data-theme-set]"));
+  function cur(){return root.getAttribute("data-theme")==="classic"?"classic":"discord";}
+  function sync(){btns.forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-theme-set")===cur()?"true":"false");});}
+  function announce(){try{document.dispatchEvent(new CustomEvent("as-theme"));}catch(e){}}
+  btns.forEach(function(b){
+    b.addEventListener("click",function(){
+      var t=b.getAttribute("data-theme-set")==="classic"?"classic":"discord";
+      root.setAttribute("data-theme",t);
+      try{localStorage.setItem("as-theme",t);}catch(e){}
+      sync();announce();
+    });
+  });
+  window.addEventListener("storage",function(e){
+    if(e.key!=="as-theme") return;
+    root.setAttribute("data-theme",e.newValue==="classic"?"classic":"discord");
+    sync();announce();
+  });
+  sync();
+})();
 </script>
 </body>
 </html>
