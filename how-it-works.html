@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="discord">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<title>How It Works - Antispam</title>
+<meta name="description" content="How the Antispam Discord bot detects message floods, duplicates, scam links, bot raids and server nukes, and what it does when it finds them.">
+<link rel="canonical" href="https://antispambot.top/how-it-works.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0F1417; --panel:#161C20; --panel-2:#1B2226; --line:#2A343A;
+    --text:#E8EDEF; --muted:#8A969C;
+    --ok:#33D17A; --warn:#F5B942; --block:#FF5D5D;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px);
+  }
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  html{font-size:clamp(100%,.6vw + .5rem,2.25rem);}
+  *{box-sizing:inherit;}
+  html,body{height:100%;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;line-height:1.6;min-height:100dvh;display:flex;flex-direction:column;}
+  header{flex-shrink:0;}
+  section{flex:1 0 auto;}
+  footer{flex-shrink:0;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{width:100%;max-width:56.25rem;margin:0 auto;padding:0 clamp(1rem,4vw,2rem);}
+  header{border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:70;background:var(--bg);}
+  .nav{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:56.25rem;margin:0 auto;padding:16px clamp(1rem,4vw,2rem);gap:16px;flex-wrap:wrap;box-sizing:border-box;}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(15px,3.6vw,18px);text-decoration:none;color:var(--text);white-space:nowrap;}
+  .brand-logo{width:24px;height:24px;flex-shrink:0;}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);}
+  .btn{display:inline-block;background:var(--ok);color:#08130D;font-weight:600;font-family:'Space Grotesk',sans-serif;text-decoration:none;padding:0.625rem 1.125rem;border-radius:0.25rem;font-size:0.875rem;border:none;cursor:pointer;}
+  .btn:hover{filter:brightness(1.08);}
+  .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text);}
+
+  section{padding:clamp(1.75rem,6vw,3rem) 0;}
+  .section-head{margin-bottom:1.75rem;}
+  .section-head h1{font-size:clamp(1.375rem,5vw,1.75rem);}
+  .section-head p{color:var(--muted);font-size:0.8438rem;margin:0.5rem 0 0;}
+  .section-head code{color:var(--ok);}
+
+  .ann-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:0.375rem;overflow:hidden;}
+  .ann-item{display:flex;gap:0.75rem;padding:clamp(0.75rem,3vw,1rem);background:var(--panel);min-width:0;}
+  .ann-avatar{width:2.25rem;height:2.25rem;border-radius:50%;flex-shrink:0;background:var(--panel-2);object-fit:cover;}
+  .ann-meta{display:flex;gap:0.625rem;align-items:baseline;flex-wrap:wrap;margin-bottom:0.25rem;}
+  .ann-author{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.8438rem;}
+  .ann-time{color:var(--muted);font-size:0.7188rem;}
+  .ann-content{font-size:0.8438rem;color:var(--text);white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;min-width:0;}
+  .ann-empty{color:var(--muted);font-size:0.8438rem;padding:1.25rem 1rem;background:var(--panel);margin:0;border-radius:0.375rem;border:1px solid var(--line);}
+
+  .load-more-wrap{display:flex;justify-content:center;margin-top:1.25rem;}
+  #loadMoreBtn{display:none;}
+  .spinner-text{color:var(--muted);font-size:0.7812rem;}
+
+
+
+
+  footer{border-top:1px solid var(--line);padding:calc(0.5rem + env(safe-area-inset-bottom,0px)) 0;}
+  .foot{display:flex;align-items:center;justify-content:center;gap:0.25rem 1.25rem;flex-wrap:wrap;text-align:center;}
+  .foot-copy{font-family:'IBM Plex Mono',monospace;font-size:0.6875rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);}
+  .foot-links{display:flex;align-items:center;gap:0.875rem;flex-wrap:wrap;}
+  .foot-links a{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:0.7812rem;color:#8EC8FA;text-decoration:none;padding:0.3125rem 0;}
+  @media (hover:hover){.foot-links a:hover{text-decoration:underline;}}
+  .foot-links a:focus-visible{outline:2px solid var(--ok);outline-offset:2px;border-radius:2px;}
+  .foot-sep{width:1px;height:0.6875rem;background:var(--line);flex-shrink:0;}
+
+  /* Tablets (portrait/landscape) */
+  @media (max-width:768px){
+    .ann-meta{gap:0.5rem;}
+  }
+
+  /* Small phones */
+  @media (max-width:480px){
+    .wrap{padding:0 1.125rem;}
+    .nav{padding:14px 1.125rem;gap:10px;}
+    .ann-avatar{width:1.875rem;height:1.875rem;}
+  }
+
+  /* Large desktop / 27"+ monitors: a touch more breathing room, column itself
+     stays a comfortable reading width so lines of text don't stretch too wide */
+  @media (min-width:1440px){
+    .wrap,.nav{max-width:64rem;}
+  }
+
+  .legal-content{color:var(--text);font-size:0.875rem;}
+  .legal-content h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.0625rem,3.6vw,1.1875rem);margin:2rem 0 0.625rem;}
+  .legal-content h2:first-child{margin-top:0;}
+  .legal-content p{margin:0 0 0.875rem;color:var(--text);}
+  .legal-content ul{margin:0 0 0.875rem;padding-left:1.25rem;}
+  .legal-content li{margin:0 0 0.375rem;}
+  .legal-content a{color:var(--ok);}
+
+  /* ===== Site menu: bar with dropdowns, "More" flyout, and slide-in sidebar on small screens ===== */
+  .site-header .nav{padding-block:0;min-height:60px;}
+  .site-header a:focus-visible,.site-header button:focus-visible{outline:2px solid var(--ok);outline-offset:-2px;border-radius:4px;}
+  .nav-actions{display:flex;align-items:center;gap:10px;}
+
+  .site-nav{margin-left:auto;font-family:'Space Grotesk',sans-serif;}
+  .sn-head{display:none;}
+  .sn-list{display:flex;align-items:center;gap:2px;list-style:none;margin:0;padding:0;}
+  .sn-item,.sn-sub li{position:relative;}
+  .sn-link{display:flex;align-items:center;gap:6px;height:60px;padding:0 14px;font:500 14px/1 'Space Grotesk',sans-serif;color:var(--muted);text-decoration:none;background:none;border:0;border-radius:0;cursor:pointer;white-space:nowrap;transition:color .15s ease,background-color .15s ease;}
+  .sn-link:hover,.sn-item.open > .sn-link{color:var(--text);background:var(--panel);}
+  .sn-link[aria-current="page"],.sn-item.is-current > .sn-link{color:var(--text);box-shadow:inset 0 -2px 0 var(--ok);}
+  .sn-link .chev{flex-shrink:0;transition:transform .18s ease;}
+  .sn-item.open > .sn-link .chev{transform:rotate(180deg);}
+
+  .sn-sub{position:absolute;top:100%;left:0;min-width:176px;margin:0;padding:0;list-style:none;background:var(--panel);border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;box-shadow:0 16px 40px rgba(0,0,0,.45);opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .15s ease,transform .15s ease,visibility 0s linear .15s;z-index:3;}
+  .sn-sub-right{left:auto;right:0;}
+  .has-sub.open > .sn-sub{opacity:1;visibility:visible;transform:none;transition:opacity .15s ease,transform .15s ease,visibility 0s;}
+  .sn-sub > li + li{border-top:1px solid var(--line);}
+  .sn-sub a,.sn-sub .sn-trigger{display:flex;align-items:center;justify-content:space-between;gap:18px;width:100%;padding:11px 16px;font:600 13.5px/1.35 'Space Grotesk',sans-serif;color:var(--text);text-decoration:none;background:none;border:0;border-radius:0;text-align:left;cursor:pointer;white-space:nowrap;}
+  .sn-sub a:hover,.sn-sub .sn-trigger:hover,.sn-sub li.open > .sn-trigger{background:var(--panel-2);}
+  .sn-sub .chev{color:var(--muted);}
+  .sn-sub > li:last-child > a,.sn-sub > li:last-child > .sn-trigger{border-radius:0 0 9px 9px;}
+  .sn-sub .sn-sub{top:-1px;left:100%;border-top:1px solid var(--line);border-radius:10px;}
+  .sn-sub .sn-sub > li:first-child > a{border-radius:9px 9px 0 0;}
+
+  .sn-toggle,.sn-close{display:none;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--text);cursor:pointer;flex-shrink:0;}
+  .sn-toggle:hover{background:var(--panel);}
+  .sn-close:hover{background:var(--panel-2);}
+  .sn-backdrop{position:fixed;inset:0;background:rgba(5,10,12,.6);z-index:75;}
+  html.sn-lock,html.sn-lock body{overflow:hidden;}
+
+  @media (max-width:900px){
+    .sn-toggle{display:inline-flex;}
+    .site-nav{position:fixed;top:0;bottom:0;left:0;width:min(320px,86vw);margin:0;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);background:var(--panel);border-right:1px solid var(--line);border-radius:0 14px 14px 0;box-shadow:0 16px 40px rgba(0,0,0,.55);overflow-y:auto;overscroll-behavior:contain;z-index:80;transform:translateX(-105%);visibility:hidden;transition:transform .25s ease,visibility 0s linear .25s;}
+    .site-nav.open{transform:none;visibility:visible;transition:transform .25s ease,visibility 0s;}
+    .sn-head{display:flex;align-items:center;justify-content:space-between;padding:12px 12px 12px 20px;border-bottom:1px solid var(--line);}
+    .sn-title{font:600 18px/1.2 'Space Grotesk',sans-serif;color:var(--text);}
+    .sn-close{display:inline-flex;}
+    .sn-list{flex-direction:column;align-items:stretch;gap:2px;padding:10px 10px 24px;}
+    .sn-link{width:100%;height:auto;min-height:46px;padding:11px 12px;justify-content:space-between;font-size:15px;font-weight:600;color:var(--text);border-radius:8px;}
+    .sn-link:hover,.sn-item.open > .sn-link{background:var(--panel-2);}
+    .sn-link[aria-current="page"],.sn-item.is-current > .sn-link{background:var(--panel-2);box-shadow:inset 3px 0 0 var(--ok);}
+    .sn-sub,.sn-sub .sn-sub{position:static;display:none;min-width:0;margin:2px 0 6px 18px;padding:0 0 0 10px;background:none;border:0;border-left:1px solid var(--line);border-radius:0;box-shadow:none;opacity:1;visibility:visible;transform:none;transition:none;}
+    .has-sub.open > .sn-sub{display:block;}
+    .sn-sub > li + li{border-top:0;}
+    .sn-sub a,.sn-sub .sn-trigger{padding:10px 12px;font-size:14px;font-weight:500;color:var(--muted);}
+    .sn-sub a:hover,.sn-sub .sn-trigger:hover,.sn-sub li.open > .sn-trigger{color:var(--text);background:var(--panel-2);}
+    .sn-sub li > a,.sn-sub li > .sn-trigger{border-radius:8px !important;}
+    .sn-sub .sn-trigger .chev{transform:rotate(90deg);}
+    .sn-sub li.open > .sn-trigger .chev{transform:rotate(-90deg);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sn-sub,.site-nav,.sn-link .chev{transition:none !important;}
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("as-theme")==="classic")document.documentElement.setAttribute("data-theme","classic");}catch(e){}</script>
+<style id="site-theme">
+/* Design switch (footer) */
+.theme-toggle{display:inline-flex;align-items:stretch;border:1px solid var(--line);border-radius:6px;overflow:hidden;flex-shrink:0;}
+.theme-toggle button{-webkit-appearance:none;appearance:none;margin:0;border:0;background:transparent;color:var(--muted);font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:12px;line-height:1.5;padding:4px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.theme-toggle button + button{border-left:1px solid var(--line);}
+.theme-toggle button:hover{color:var(--text);}
+.theme-toggle button[aria-pressed="true"]{background:var(--panel-2);color:var(--text);}
+.theme-toggle button:focus-visible{outline:2px solid var(--ok);outline-offset:-2px;}
+
+html[data-theme="discord"]{color-scheme:dark;
+  --bg:#313338; --panel:#2B2D31; --panel-2:#35373C; --line:#3F4147; --dark:#1E1F22;
+  --text:#F2F3F5; --muted:#B5BAC1;
+  --ok:#23A55A; --warn:#F0B232; --block:#F23F42;
+  --brand:#5865F2; --brand-hover:#4752C4; --link:#00A8FC;
+  --sans:'gg sans','Noto Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono',Consolas,'Courier New',monospace;}
+html[data-theme="discord"]{scrollbar-color:#1A1B1E #2B2D31;}
+html[data-theme="discord"] body{-webkit-font-smoothing:antialiased;}
+html[data-theme="discord"] ::selection{background:rgba(0,106,255,.4);}
+html[data-theme="discord"] body,html[data-theme="discord"] body *{font-family:var(--sans) !important;}
+html[data-theme="discord"] body :is(code,kbd,samp,pre,.console-bar,.console-bar *,.spark-head,.spark-head *,.spark-axis,.spark-axis *,.spark-tip,.status-line,.status-line *){font-family:var(--mono) !important;}
+html[data-theme="discord"] body :focus-visible{outline-color:var(--link) !important;}
+html[data-theme="discord"] header{background:var(--dark);border-bottom-color:#17181B;box-shadow:0 1px 0 rgba(4,4,5,.2),0 2px 6px rgba(4,4,5,.18);}
+html[data-theme="discord"] footer,html[data-theme="discord"] .site-foot{background:var(--panel);border-top-color:#1E1F22;}
+html[data-theme="discord"] .foot-links a{color:var(--link);}
+html[data-theme="discord"] .sn-link:hover,html[data-theme="discord"] .sn-item.open > .sn-link{background:var(--panel-2);}
+html[data-theme="discord"] .sn-link[aria-current="page"],html[data-theme="discord"] .sn-item.is-current > .sn-link{box-shadow:inset 0 -2px 0 var(--brand);}
+@media (max-width:900px){html[data-theme="discord"] .sn-link[aria-current="page"],html[data-theme="discord"] .sn-item.is-current > .sn-link{box-shadow:inset 3px 0 0 var(--brand);}}
+@media (min-width:901px){html[data-theme="discord"] .sn-sub{background:#111214;border:1px solid #1E1F22;border-top:0;border-radius:0 0 8px 8px;padding:6px;min-width:200px;box-shadow:0 8px 16px rgba(0,0,0,.4);}
+html[data-theme="discord"] .sn-sub .sn-sub{border-top:1px solid #1E1F22;border-radius:8px;}
+html[data-theme="discord"] .sn-sub > li + li{border-top:0;margin-top:2px;}
+html[data-theme="discord"] .sn-sub a,html[data-theme="discord"] .sn-sub .sn-trigger,html[data-theme="discord"] .sn-sub > li:last-child > a,html[data-theme="discord"] .sn-sub > li:last-child > .sn-trigger,html[data-theme="discord"] .sn-sub .sn-sub > li:first-child > a{padding:8px 10px;border-radius:4px;font-weight:500;color:#DBDEE1;}
+html[data-theme="discord"] .sn-sub a:hover,html[data-theme="discord"] .sn-sub .sn-trigger:hover,html[data-theme="discord"] .sn-sub li.open > .sn-trigger{background:var(--brand);color:#fff;}
+html[data-theme="discord"] .sn-sub .sn-trigger:hover .chev,html[data-theme="discord"] .sn-sub li.open > .sn-trigger .chev{color:#fff;}}
+html[data-theme="discord"] .btn{background:var(--brand);color:#fff;border-radius:3px;font-weight:500;transition:background-color .17s ease;}
+html[data-theme="discord"] .btn:hover{background:var(--brand-hover);filter:none;}
+html[data-theme="discord"] .btn.btn-ghost{background:#4E5058;border:1px solid transparent;color:#fff;}
+html[data-theme="discord"] .btn.btn-ghost:hover{background:#6D6F78;}
+html[data-theme="discord"] :not(pre) > code,html[data-theme="discord"] .note code,html[data-theme="discord"] .cmdtable code,html[data-theme="discord"] .sec-list code,html[data-theme="discord"] .info code,html[data-theme="discord"] .body code,html[data-theme="discord"] .docs-sub code,html[data-theme="discord"] .section-head code,html[data-theme="discord"] .sub code{background:rgba(88,101,242,.3);color:#C9CDFB;padding:.1em .4em;border-radius:3px;font-size:.92em;}
+html[data-theme="discord"] .body a,html[data-theme="discord"] .sec-list a,html[data-theme="discord"] .docs-sub a,html[data-theme="discord"] .info a,html[data-theme="discord"] .legal-content a{color:var(--link);}
+html[data-theme="discord"] .module .tag,html[data-theme="discord"] .si-page{color:#949CF7;}
+html[data-theme="discord"] .console{background:var(--panel);border:1px solid #1E1F22;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.35);}
+html[data-theme="discord"] .console-bar{background:#232428;}
+html[data-theme="discord"] .stat[data-metric]:hover,html[data-theme="discord"] .stat[data-metric].active{outline-color:var(--brand);}
+html[data-theme="discord"] .docs-side{background:var(--panel);}
+html[data-theme="discord"] .docs-main{border-left-color:#1E1F22;}
+html[data-theme="discord"] .docs-item,html[data-theme="discord"] .docs-group-btn{border-radius:4px;}
+html[data-theme="discord"] .docs-item:hover,html[data-theme="discord"] .docs-group-btn:hover{background:var(--panel-2);}
+html[data-theme="discord"] .docs-item.active{background:#404249;color:#fff;}
+html[data-theme="discord"] .docs-item.active::before{background:#fff;}
+html[data-theme="discord"] .docs-quick{border-radius:8px;}
+html[data-theme="discord"] .modules{gap:12px;background:none;border:0;}
+html[data-theme="discord"] .module{border:1px solid #232428;border-radius:8px;transition:background-color .15s ease,border-color .15s ease;}
+html[data-theme="discord"] .module:hover{background:var(--panel-2);border-color:var(--line);}
+html[data-theme="discord"] .info{background:var(--panel);border:0;border-left:4px solid var(--brand);border-radius:4px;}
+html[data-theme="discord"] .cmdtable tbody tr:hover{background:rgba(255,255,255,.03);}
+html[data-theme="discord"] .ann-item{margin-inline:-.75rem;padding-left:.75rem;padding-right:.75rem;border-radius:4px;border-bottom-color:rgba(255,255,255,.05);transition:background-color .1s ease;}
+html[data-theme="discord"] .ann-item:hover{background:rgba(4,4,5,.14);}
+html[data-theme="discord"] .ann-avatar{width:2.5rem;height:2.5rem;}
+html[data-theme="discord"] .docs-quick{background:rgba(88,101,242,.14);}
+html[data-theme="discord"] .docs-quick:hover{background:rgba(88,101,242,.22);}
+html[data-theme="discord"] .docs-quick.active{border-color:rgba(88,101,242,.65);}
+html[data-theme="discord"] .search-item mark{background:rgba(88,101,242,.35);}
+html[data-theme="discord"] .sec-h.hit{background:rgba(88,101,242,.2);box-shadow:0 0 0 6px rgba(88,101,242,.2);}
+html[data-theme="discord"] .theme-toggle{border-color:#1E1F22;border-radius:4px;background:#232428;}
+html[data-theme="discord"] .theme-toggle button + button{border-left-color:#1E1F22;}
+html[data-theme="discord"] .theme-toggle button[aria-pressed="true"]{background:var(--brand);color:#fff;}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2849783264493851"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav">
+    <a class="brand" href="/"><img class="brand-logo" src="data:image/png;base64,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" alt="Antispam logo">Antispam<span class="dot"></span></a>
+    <nav class="site-nav" id="siteNav" aria-label="Main">
+      <div class="sn-head"><span class="sn-title">Antispam</span><button type="button" class="sn-close" id="navClose" aria-label="Close menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
+      <ul class="sn-list">
+          <li class="sn-item"><a class="sn-link" href="/#top">Home</a></li>
+          <li class="sn-item has-sub">
+            <button type="button" class="sn-link sn-trigger" aria-expanded="false" aria-controls="subFeatures">Features<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <ul class="sn-sub" id="subFeatures">
+              <li><a href="/features.html#quickstart">Quickstart</a></li>
+              <li><a href="/features.html#antispam">Anti-Spam</a></li>
+              <li><a href="/features.html#shield">Raid Shield</a></li>
+              <li class="has-sub">
+                <button type="button" class="sn-trigger" aria-expanded="false" aria-controls="subMore">More<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"/></svg></button>
+                <ul class="sn-sub" id="subMore">
+                  <li><a href="/features.html#tickets">Tickets</a></li>
+                  <li><a href="/features.html#reactionroles">Reaction Roles</a></li>
+                  <li><a href="/features.html#auditlog">Audit Log</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="sn-item"><a class="sn-link" href="/features.html#moderation">Commands</a></li>
+          <li class="sn-item"><a class="sn-link" href="/announcements.html">Announcements</a></li>
+          <li class="sn-item has-sub">
+            <button type="button" class="sn-link sn-trigger" aria-expanded="false" aria-controls="subSupport">Support<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+            <ul class="sn-sub sn-sub-right" id="subSupport">
+              <li><a href="https://discord.gg/wgDauHEPhc" target="_blank" rel="noopener">Discord Server</a></li>
+              <li><a href="mailto:antispamdevs@gmail.com">Email Us</a></li>
+              <li><a href="https://ko-fi.com/asahi009" target="_blank" rel="noopener">Support me on Ko-fi</a></li>
+            </ul>
+          </li>
+        </ul>
+    </nav>
+    <button type="button" class="sn-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg></button>
+  </div>
+  <div class="sn-backdrop" id="navBackdrop" hidden></div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <h1>How Antispam detects spam and raids</h1>
+      <p>Last updated <code>November 23, 2026</code>.</p>
+    </div>
+    <div class="legal-content">
+
+      <p>Antispam is built from separate layers. Each layer looks for one kind of problem and reacts in a way you choose, so you can turn on exactly what your server needs. This page explains what each layer checks and where its limits are.</p>
+      <h2>Message floods</h2>
+      <p>Anti-Spam counts each member's messages. If a member goes over your spam limit inside the time window you set, it deletes that member's recent messages in the channel (the last 30 seconds) and applies your punishment: Kick, Ban, Delete Message, Timeout or Warn. Administrators and whitelisted members are never checked.</p>
+      <p><strong>Auto-slowmode</strong> is a separate, optional tool. When one channel receives a flood of messages from anyone, it turns on slowmode and turns it back off once the channel calms down. It never overrides a longer slowmode you set yourself.</p>
+      <h2>Repeated messages</h2>
+      <p>The Duplicate Filter compares messages, so changing one character or the capital letters does not get a message past it. The similarity threshold defaults to 85 percent and can be set between 70 and 100. You also choose the interval in which a repeat counts and how many identical messages are allowed.</p>
+      <h2>Message content filters</h2>
+      <p>The Spam Filters check each single message for mass mentions, emoji spam, excessive caps, walls of text, newline spam, repeated characters, zalgo text, invisible characters, attachment and sticker spam, and the same message posted across several channels, which is a classic sign of a hacked account. Each filter can run in log-only mode, so you can see what it would catch before it punishes anyone.</p>
+      <h2>Scam and phishing links</h2>
+      <p>Scam Link Detection judges the address of each link with rules instead of a list of known bad sites. It looks for look-alike domains such as misspelled brand names, a real address hidden inside another one, <code>@</code> decoys, and offers such as free Nitro that point to unknown sites. Because it uses rules, it can miss brand-new tricks, and edited messages are not checked. If a real site is flagged by mistake, you can trust its domain.</p>
+      <h2>Bot raids</h2>
+      <p>Raid Shield looks only at bots. It flags 3 or more different bots posting the same message within 30 seconds, or one bot repeating a message 6 times within 15 seconds. It can read the hidden content of forwarded messages, which look empty to ordinary filters. Flagged bots are timed out for one hour, their spam is deleted, and a report with Allow, Kick and Ban buttons is posted for the owner. The shield can also switch itself on when 5 different members are caught by Anti-Spam within 60 seconds.</p>
+      <h2>Nukes and mass actions</h2>
+      <p>Guard watches for attacks from inside a server. It reacts when an untrusted user deletes 3 channels or roles within 10 seconds, makes 5 bans within 10 seconds, creates 5 channels within 10 seconds, or when 5 or more accounts join within 10 seconds. It saves a backup every 10 minutes and pauses backups for 10 minutes after an attack, so damage is never saved. Deleted roles and channels can then be rebuilt. A single deletion is never punished, only mass actions.</p>
+      <h2>New members</h2>
+      <p>The New-Member Gate checks account age when someone joins (7 days by default) and can quarantine or kick accounts that are too new. It can also block links and images, and apply stricter spam limits, for a short time after a member joins. CAPTCHA Verification and the Honeypot add two more checks that automated accounts usually fail.</p>
+      <h2>Warnings and second chances</h2>
+      <p>Every warning shares one count. By default, 6 warnings cause a softban, which removes the member without a permanent ban, and you can design your own steps with Warn Escalation. Warn Decay lets old warnings expire. When a filter catches someone wrongly, the log message has Pardon, Untimeout, Ban and Softban buttons, and Appeals let a punished member explain why the decision should be lifted.</p>
+      <h2>What it keeps</h2>
+      <p>The Stats page records only the time, the filter and the channel for each catch, with no names and no message text. Those records are deleted after 35 days. The <a href="/privacy.html">Privacy Policy</a> describes the rest of what the service handles.</p>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span class="foot-copy">Antispam &copy; <span id="footYear">2026</span></span>
+    <nav class="foot-links" aria-label="Legal">
+      <a href="/tos.html">Terms</a>
+      <span class="foot-sep" aria-hidden="true"></span>
+      <a href="/privacy.html">Privacy</a>
+    </nav>
+<div class="theme-toggle" id="themeToggle" role="group" aria-label="Site design"><button type="button" data-theme-set="discord" aria-pressed="true">Discord</button><button type="button" data-theme-set="classic" aria-pressed="false">Classic</button></div>
+  </div>
+</footer>
+<script>try{document.getElementById("footYear").textContent=new Date().getFullYear();}catch(e){}</script>
+
+<script>
+try {
+  // --- Site menu ---
+try {
+(function(){
+  const nav = document.getElementById("siteNav");
+  const toggle = document.getElementById("navToggle");
+  const closeBtn = document.getElementById("navClose");
+  const backdrop = document.getElementById("navBackdrop");
+  if(!nav || !toggle || !closeBtn || !backdrop) return;
+  const desktop = window.matchMedia("(min-width: 901px)");
+  const subs = Array.from(nav.querySelectorAll(".has-sub"));
+  const timers = new Map();
+  let lastPointer = "mouse";
+  const trig = li => li.querySelector(":scope > .sn-trigger");
+  const subList = li => li.querySelector(":scope > .sn-sub");
+  const items = ul => Array.from(ul.children).map(li => li.querySelector(":scope > a, :scope > .sn-trigger")).filter(Boolean);
+
+  function setSub(li, open){
+    li.classList.toggle("open", open);
+    trig(li).setAttribute("aria-expanded", open ? "true" : "false");
+    if(!open) li.querySelectorAll(".has-sub.open").forEach(c => setSub(c, false));
+  }
+  function closeSubs(keep){
+    subs.forEach(li => { if(!keep || !li.contains(keep)) setSub(li, false); });
+  }
+
+  nav.addEventListener("pointerdown", e => { lastPointer = e.pointerType; });
+
+  subs.forEach(li => {
+    // mouse: open on hover, close shortly after the pointer leaves
+    li.addEventListener("pointerenter", e => {
+      if(e.pointerType !== "mouse" || !desktop.matches) return;
+      clearTimeout(timers.get(li));
+      closeSubs(li);
+      setSub(li, true);
+    });
+    li.addEventListener("pointerleave", e => {
+      if(e.pointerType !== "mouse" || !desktop.matches) return;
+      timers.set(li, setTimeout(() => setSub(li, false), 140));
+    });
+    // click / tap / keyboard: toggle
+    trig(li).addEventListener("click", e => {
+      if(desktop.matches && lastPointer === "mouse" && e.detail > 0){
+        closeSubs(li); setSub(li, true); return;   // already open from hover, keep it open
+      }
+      if(li.classList.contains("open")) setSub(li, false);
+      else { closeSubs(li); setSub(li, true); }
+    });
+    li.addEventListener("focusout", e => {
+      if(desktop.matches && e.relatedTarget && !li.contains(e.relatedTarget)) setSub(li, false);
+    });
+  });
+
+  // keyboard navigation inside the menu
+  nav.addEventListener("keydown", e => {
+    const el = document.activeElement;
+    if(e.key === "Tab" && !desktop.matches && nav.classList.contains("open")){
+      const f = Array.from(nav.querySelectorAll("a[href], button")).filter(x => x.offsetParent !== null);
+      if(!f.length) return;
+      if(e.shiftKey && el === f[0]){ e.preventDefault(); f[f.length - 1].focus(); }
+      else if(!e.shiftKey && el === f[f.length - 1]){ e.preventDefault(); f[0].focus(); }
+      return;
+    }
+    const isTrigger = el.classList && el.classList.contains("sn-trigger");
+    const ownLi = el.closest ? el.closest("li") : null;
+    const ownUl = ownLi ? ownLi.parentElement : null;
+    const inSub = ownUl && ownUl.classList.contains("sn-sub");
+    if(e.key === "ArrowDown" && isTrigger && !inSub){
+      e.preventDefault(); closeSubs(ownLi); setSub(ownLi, true);
+      const first = items(subList(ownLi))[0]; if(first) first.focus();
+    } else if(e.key === "ArrowRight" && isTrigger && inSub){
+      e.preventDefault(); closeSubs(ownLi); setSub(ownLi, true);
+      const first = items(subList(ownLi))[0]; if(first) first.focus();
+    } else if(e.key === "ArrowLeft" && inSub && ownUl.parentElement.parentElement.classList.contains("sn-sub")){
+      e.preventDefault();
+      const parentLi = ownUl.parentElement; setSub(parentLi, false); trig(parentLi).focus();
+    } else if(inSub && (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Home" || e.key === "End")){
+      e.preventDefault();
+      const list = items(ownUl); const i = list.indexOf(el);
+      let n = i;
+      if(e.key === "ArrowDown") n = (i + 1) % list.length;
+      else if(e.key === "ArrowUp") n = (i - 1 + list.length) % list.length;
+      else if(e.key === "Home") n = 0;
+      else n = list.length - 1;
+      list[n].focus();
+    }
+  });
+
+  document.addEventListener("keydown", e => {
+    if(e.key !== "Escape") return;
+    if(!desktop.matches && nav.classList.contains("open")){ closeDrawer(true); return; }
+    const open = subs.filter(li => li.classList.contains("open"));
+    if(!open.length) return;
+    const focused = open.filter(li => li.contains(document.activeElement));
+    const target = (focused.length ? focused : open).pop();
+    const hadFocus = target.contains(document.activeElement);
+    setSub(target, false);
+    if(hadFocus) trig(target).focus();
+  });
+
+  // links: close menus (and the sidebar on small screens) after choosing a page
+  nav.addEventListener("click", e => {
+    if(!e.target.closest("a")) return;
+    closeSubs(null);
+    if(!desktop.matches) closeDrawer(false);
+  });
+  document.addEventListener("click", e => { if(!nav.contains(e.target)) closeSubs(null); });
+
+  // sidebar (small screens)
+  function openDrawer(){
+    nav.classList.add("open");
+    backdrop.hidden = false;
+    toggle.setAttribute("aria-expanded", "true");
+    document.documentElement.classList.add("sn-lock");
+    closeBtn.focus();
+  }
+  function closeDrawer(returnFocus){
+    nav.classList.remove("open");
+    backdrop.hidden = true;
+    toggle.setAttribute("aria-expanded", "false");
+    document.documentElement.classList.remove("sn-lock");
+    closeSubs(null);
+    if(returnFocus) toggle.focus();
+  }
+  toggle.addEventListener("click", () => { nav.classList.contains("open") ? closeDrawer(true) : openDrawer(); });
+  closeBtn.addEventListener("click", () => closeDrawer(true));
+  backdrop.addEventListener("click", () => closeDrawer(true));
+  const onResize = () => { closeDrawer(false); closeSubs(null); };
+  if(desktop.addEventListener) desktop.addEventListener("change", onResize); else desktop.addListener(onResize);
+})();
+} catch(e) { console.error("Menu wiring failed:", e); }
+
+} catch(e) { console.error("Dropdown wiring failed:", e); }
+</script>
+<script>
+(function(){
+  var root=document.documentElement,box=document.getElementById("themeToggle");
+  if(!box) return;
+  var btns=Array.prototype.slice.call(box.querySelectorAll("button[data-theme-set]"));
+  function cur(){return root.getAttribute("data-theme")==="classic"?"classic":"discord";}
+  function sync(){btns.forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-theme-set")===cur()?"true":"false");});}
+  function announce(){try{document.dispatchEvent(new CustomEvent("as-theme"));}catch(e){}}
+  btns.forEach(function(b){
+    b.addEventListener("click",function(){
+      var t=b.getAttribute("data-theme-set")==="classic"?"classic":"discord";
+      root.setAttribute("data-theme",t);
+      try{localStorage.setItem("as-theme",t);}catch(e){}
+      sync();announce();
+    });
+  });
+  window.addEventListener("storage",function(e){
+    if(e.key!=="as-theme") return;
+    root.setAttribute("data-theme",e.newValue==="classic"?"classic":"discord");
+    sync();announce();
+  });
+  sync();
+})();
+</script>
+</body>
+</html>
